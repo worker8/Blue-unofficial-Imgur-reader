@@ -21,7 +21,7 @@ import worker8.com.github.jimgur.imgur.paging_api.ImgurPaginationResponse;
 import worker8.com.github.jimgur.imgur.paging_api.ImgurPaginator;
 
 public class MainActivity extends AppCompatActivity {
-
+    public final static String TAG = "MainActivity";
     @Bind(R.id.main_lv_image_list)
     ListView imageListView;
 
@@ -63,18 +63,18 @@ public class MainActivity extends AppCompatActivity {
                 .subscribe(new Observer<ImgurPaginationResponse>() {
                     @Override
                     public void onCompleted() {
-                        Log.d("ddw", "onCompleted: ");
+                        Log.d(TAG, "onCompleted: ");
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.d("ddw", "onError: ");
+                        Log.d(TAG, "onError: ");
                         e.printStackTrace();
                     }
 
                     @Override
                     public void onNext(ImgurPaginationResponse imgurPaginationResponse) {
-                        Log.d("ddw", "onNext: ");
+                        Log.d(TAG, "onNext: ");
                         ImageAdapter imageAdapter = new ImageAdapter(activity, imgurPaginationResponse.getImgurDataList());
                         imageListView.setAdapter(imageAdapter);
                     }

@@ -17,11 +17,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <TextView
                 android:id="@+id/row_main_tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="LALALLALALLASJDASJDKLASJDKLSJ" />
+                tools:text="This is a pretty long imgur title for previewing" />
+
             <ImageView
                 android:id="@+id/row_main_iv_image"
                 android:layout_width="match_parent"
@@ -29,9 +31,7 @@
                 android:adjustViewBounds="true"
                 tools:src="@mipmap/ic_launcher" />
 
-
         </LinearLayout>
-
 
     </android.support.v7.widget.CardView>
 </LinearLayout>

@@ -1,11 +1,15 @@
 package worker8.com.github.imgurdiscovery;
 
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.util.ArrayList;
 
@@ -46,19 +50,29 @@ public class ImageAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         Data imgurData = imgurDataList.get(position);
 
-        TextView textView;
-        ImageView imageView;
-
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.row_image, null);
         }
-        textView = ButterKnife.findById(convertView, R.id.row_main_tv_title);
-        imageView = ButterKnife.findById(convertView, R.id.row_main_iv_image);
+        TextView textView = ButterKnife.findById(convertView, R.id.row_main_tv_title);
+        final ImageView imageView = ButterKnife.findById(convertView, R.id.row_main_iv_image);
 
         // TODO: clear convertView so that a recycled convertView doesn't show data from previous post
         clearConvertView(convertView);
 
         textView.setText(imgurData.getTitle());
+
+        ImageLoader.getInstance().loadImage(imgurData.getLink(), new SimpleImageLoadingListener() {
+            @Override
+            public void onLoadingComplete(String imageUri, View view, Bitmap bitmap) {
+                int calculatedHeight = (int) ((float) bitmap.getHeight() / (float) bitmap.getWidth() * imageView.getWidth());
+                // image
+                imageView.getLayoutParams().height = calculatedHeight;
+                imageView.setImageBitmap(bitmap);
+
+                // TODO: hide the progress bar
+
+            }
+        });
 
         return convertView;
     }

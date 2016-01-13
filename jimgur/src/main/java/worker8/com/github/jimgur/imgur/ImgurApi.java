@@ -15,18 +15,18 @@ import worker8.com.github.jimgur.imgur.image_api.ImgurImageApi;
      .subscribe(new Observer<ImgurImageResponse>() {
         @Override
         public void onCompleted() {
-        Log.d("ddw", "onCompleted: ");
+        Log.d("ImgurApi", "onCompleted: ");
         }
 
         @Override
         public void onError(Throwable e) {
-        Log.d("ddw", "onError: ");
+        Log.d("ImgurApi", "onError: ");
         e.printStackTrace();
         }
 
         @Override
         public void onNext(ImgurImageResponse imgurImageResponse) {
-        Log.d("ddw", "onNext: "+imgurImageResponse.getData().getDatetime());
+        Log.d("ImgurApi", "onNext: "+imgurImageResponse.getData().getDatetime());
         }
         });
     </pre>
