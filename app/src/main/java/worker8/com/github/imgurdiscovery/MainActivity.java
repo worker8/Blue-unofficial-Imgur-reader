@@ -17,17 +17,22 @@ import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
+import worker8.com.github.imgurdiscovery.util.RxUtils;
 import worker8.com.github.jimgur.imgur.paging_api.ImgurPaginationResponse;
 import worker8.com.github.jimgur.imgur.paging_api.ImgurPaginator;
 
 public class MainActivity extends AppCompatActivity {
     public final static String TAG = "MainActivity";
-    @Bind(R.id.main_lv_image_list)
-    ListView imageListView;
-
     MainActivity activity;
 
-    ImgurPaginator imgurPaginator;
+    /* data models */
+    private CompositeSubscription _subscriptions = new CompositeSubscription();
+    private ImgurPaginator imgurPaginator;
+
+    /* UI variables */
+    @Bind(R.id.main_lv_image_list)
+    ListView imageListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
         loadMore();
     }
 
@@ -56,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         if (imgurPaginator == null) {
             imgurPaginator = new ImgurPaginator();
         }
-        Observable.just(1)
+        _subscriptions.add(Observable.just(1)
                 .map(i -> imgurPaginator.next())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -78,7 +82,19 @@ public class MainActivity extends AppCompatActivity {
                         ImageAdapter imageAdapter = new ImageAdapter(activity, imgurPaginationResponse.getImgurDataList());
                         imageListView.setAdapter(imageAdapter);
                     }
-                });
+                }));
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        _subscriptions = RxUtils.getNewCompositeSubIfUnsubscribed(_subscriptions);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        RxUtils.unsubscribeIfNotNull(_subscriptions);
     }
 
     @Override

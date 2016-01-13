@@ -56,11 +56,9 @@ public class ImageAdapter extends BaseAdapter {
         TextView textView = ButterKnife.findById(convertView, R.id.row_main_tv_title);
         final ImageView imageView = ButterKnife.findById(convertView, R.id.row_main_iv_image);
 
-        // TODO: clear convertView so that a recycled convertView doesn't show data from previous post
-        clearConvertView(convertView);
+        clearConvertView(textView, imageView);
 
         textView.setText(imgurData.getTitle());
-
         ImageLoader.getInstance().loadImage(imgurData.getLink(), new SimpleImageLoadingListener() {
             @Override
             public void onLoadingComplete(String imageUri, View view, Bitmap bitmap) {
@@ -77,7 +75,8 @@ public class ImageAdapter extends BaseAdapter {
         return convertView;
     }
 
-    private void clearConvertView(View convertView) {
-
+    private void clearConvertView(TextView textView, ImageView imageView) {
+        textView.setText("");
+        imageView.setImageResource(android.R.color.transparent);
     }
 }
