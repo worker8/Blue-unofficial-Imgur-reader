@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/image_viewer_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:onClick="imageViewerOnClick">
+
+    <uk.co.senab.photoview.PhotoView
+        android:id="@+id/image_viewer_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:duplicateParentState="true"
+        android:layout_gravity="center" />
+
+    <com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
+        android:id="@+id/image_viewer_image_deepzoom"
+        android:layout_width="match_parent"
+        android:duplicateParentState="true"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
+    <ProgressBar
+        android:id="@+id/image_viewer_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:indeterminate="true" />
+
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="bottom"-->
+        <!--android:background="@color/md_grey_700_alpha"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:paddingLeft="16dp"-->
+        <!--android:paddingRight="16dp">-->
+
+        <!--<ImageView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:background="@drawable/ripple_white"-->
+            <!--android:onClick="onOpenInBrowserClicked"-->
+            <!--android:padding="12dp"-->
+            <!--android:src="@drawable/ic_open_in_browser_white_24dp" />-->
+
+        <!--<ImageView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:background="@drawable/ripple_white"-->
+            <!--android:onClick="onCopyClicked"-->
+            <!--android:padding="12dp"-->
+            <!--android:src="@drawable/ic_content_copy_white_24dp" />-->
+
+        <!--<ImageView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:background="@drawable/ripple_white"-->
+            <!--android:onClick="onShareClicked"-->
+            <!--android:padding="12dp"-->
+            <!--android:src="@drawable/ic_share_white_24dp" />-->
+
+        <!--<ImageView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:background="@drawable/ripple_white"-->
+            <!--android:onClick="onDownloadClicked"-->
+            <!--android:padding="12dp"-->
+            <!--android:src="@drawable/ic_file_download_white_24dp" />-->
+
+        <!--<ImageView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:background="@drawable/ripple_white"-->
+            <!--android:onClick="onHDClicked"-->
+            <!--android:padding="12dp"-->
+            <!--android:src="@drawable/ic_photo_white_24dp" />-->
+    <!--</LinearLayout>-->
+</FrameLayout>

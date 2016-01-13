@@ -1,9 +1,5 @@
 package worker8.com.github.jimgur.imgur.image_api;
 
-/**
- * Created by tanjunrong on 8/27/15.
- */
-
 public class Data {
     private String animated;
 

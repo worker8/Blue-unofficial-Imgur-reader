@@ -20,7 +20,6 @@
     <color name="md_red_A200">#FF5252</color>
     <color name="md_red_A400">#FF1744</color>
     <color name="md_red_A700">#D50000</color>
-    <color name="md_red_reddit_sync_nsfw">#881414</color>
 
     <!-- pinks -->
     <color name="md_pink_50">#FCE4EC</color>
@@ -302,6 +301,7 @@
     <color name="md_grey_800">#424242</color>
     <color name="md_grey_800_alpha">#DD424242</color>
     <color name="md_grey_900">#212121</color>
+    <color name="md_black_1000_alpha">#99000000</color>
     <color name="md_black_1000">#000000</color>
     <color name="md_white_1000">#ffffff</color>
     <color name="md_white_400_alpha">#64ffffff</color>

@@ -1,4 +1,4 @@
-package worker8.com.github.imgurdiscovery;
+package worker8.com.github.imgurdiscovery.main;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -18,6 +18,7 @@ import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
+import worker8.com.github.imgurdiscovery.R;
 import worker8.com.github.imgurdiscovery.util.RxUtils;
 import worker8.com.github.jimgur.imgur.paging_api.ImgurPaginationResponse;
 import worker8.com.github.jimgur.imgur.paging_api.ImgurPaginator;

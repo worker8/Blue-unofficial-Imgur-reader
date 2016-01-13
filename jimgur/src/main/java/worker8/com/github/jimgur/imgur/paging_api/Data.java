@@ -1,5 +1,8 @@
 package worker8.com.github.jimgur.imgur.paging_api;
 
+/**
+ * @see <a href="https://api.imgur.com/models/image">Imgur Model Documentation</a>
+ */
 public class Data {
     private String animated;
 
@@ -54,6 +57,26 @@ public class Data {
     private String is_album;
 
     private String ups;
+
+    private String mp4;
+
+    private String cover;
+
+    public String getCover() {
+        return cover;
+    }
+
+    public void setCover(String cover) {
+        this.cover = cover;
+    }
+
+    public String getMp4() {
+        return mp4;
+    }
+
+    public void setMp4(String mp4) {
+        this.mp4 = mp4;
+    }
 
     public String getAnimated() {
         return animated;
@@ -273,6 +296,6 @@ public class Data {
 
     @Override
     public String toString() {
-        return "ClassPojo [animated = " + animated + ", link = " + link + ", score = " + score + ", type = " + type + ", bandwidth = " + bandwidth + ", id = " + id + ", title = " + title + ", height = " + height + ", description = " + description + ", points = " + points + ", datetime = " + datetime + ", account_url = " + account_url + ", topic_id = " + topic_id + ", topic = " + topic + ", comment_count = " + comment_count + ", account_id = " + account_id + ", vote = " + vote + ", width = " + width + ", favorite = " + favorite + ", section = " + section + ", size = " + size + ", comment_preview = " + comment_preview + ", nsfw = " + nsfw + ", views = " + views + ", downs = " + downs + ", is_album = " + is_album + ", ups = " + ups + "]";
+        return "ClassPojo [animated = " + animated + ", link = " + link + ", score = " + score + ", type = " + type + ", bandwidth = " + bandwidth + ", id = " + id + ", title = " + title + ", height = " + height + ", description = " + description + ", points = " + points + ", datetime = " + datetime + ", account_url = " + account_url + ", topic_id = " + topic_id + ", topic = " + topic + ", comment_count = " + comment_count + ", account_id = " + account_id + ", vote = " + vote + ", width = " + width + ", favorite = " + favorite + ", section = " + section + ", size = " + size + ", comment_preview = " + comment_preview + ", nsfw = " + nsfw + ", views = " + views + ", downs = " + downs + ", is_album = " + is_album + ", cover = " + cover + ", ups = " + ups + ", mp4 = " + mp4 + "]";
     }
 }
