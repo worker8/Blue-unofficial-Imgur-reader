@@ -167,7 +167,11 @@ public class Data {
     }
 
     public String getAccount_url() {
-        return account_url;
+        if (account_url == null || account_url.equals("")) {
+            return "anonymous";
+        } else {
+            return account_url;
+        }
     }
 
     public void setAccount_url(String account_url) {

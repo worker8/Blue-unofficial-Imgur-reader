@@ -3,6 +3,7 @@ package worker8.com.github.imgurdiscovery.main;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 import java.util.ArrayList;
 
 import butterknife.ButterKnife;
+import main.java.com.github.worker8.HtmlFormatter;
 import worker8.com.github.imgurdiscovery.R;
 import worker8.com.github.imgurdiscovery.imgur.ImgurLinkDispatcher;
 import worker8.com.github.imgurdiscovery.public_activities.GifActivity;
@@ -57,16 +59,20 @@ public class ImageAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         Data imgurData = imgurDataList.get(position);
-//        Log.d("ImageAdapter", "getType(" + position + "): " + imgurData);
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.row_image, null);
         }
-        TextView textView = ButterKnife.findById(convertView, R.id.row_main_tv_title);
+        /* find views + clearing them */
+        TextView titleTV = ButterKnife.findById(convertView, R.id.row_main_tv_title);
+        TextView authorTV = ButterKnife.findById(convertView, R.id.row_main_tv_author);
         final ImageView imageView = ButterKnife.findById(convertView, R.id.row_main_iv_image);
+        clearConvertView(titleTV, authorTV, imageView);
 
-        clearConvertView(textView, imageView);
+        String titleText = HtmlFormatter.from(imgurData.getAccount_url()).fontColor("#01579B").bold().getHtmlString();
+//        titleText += HtmlFormatter.from(Constant.MIDDLE_DOT + creationDateFormatted).small().getHtmlString();
+        authorTV.setText(Html.fromHtml(titleText), TextView.BufferType.SPANNABLE);
 
-        textView.setText(imgurData.getTitle());
+        titleTV.setText(imgurData.getTitle());
 //        switch ()
         if (ImgurLinkDispatcher.getType(imgurData) == ImgurLinkDispatcher.Type.MP4) {
             Log.d("ddw", imgurData.getTitle() + " : mp4");
@@ -148,9 +154,11 @@ public class ImageAdapter extends BaseAdapter {
         });
     }
 
-    private void clearConvertView(TextView textView, ImageView imageView) {
-        textView.setText("");
+    private void clearConvertView(TextView titleTV, TextView authorTV, ImageView imageView) {
+        titleTV.setText("");
+        authorTV.setText("");
         imageView.getLayoutParams().height = (int) Util.convertDpToPixel(150, activity);
         imageView.setImageResource(android.R.color.transparent);
+        imageView.setOnClickListener(null);
     }
 }
