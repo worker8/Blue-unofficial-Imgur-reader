@@ -48,13 +48,30 @@
                     tools:text="worker8" />
             </LinearLayout>
 
-            <ImageView
-                android:id="@+id/row_main_iv_image"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                tools:src="@mipmap/ic_launcher" />
+                android:layout_height="wrap_content">
 
+                <ImageView
+                    android:id="@+id/row_main_iv_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    tools:src="@mipmap/ic_launcher" />
+
+                <TextView
+                    android:id="@+id/row_main_tv_tag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|right"
+                    android:layout_marginBottom="@dimen/standard_margin_16dp"
+                    android:layout_marginRight="@dimen/standard_margin_16dp"
+                    android:background="@color/md_black_1000_alpha"
+                    android:padding="8dp"
+                    android:textColor="@color/md_white_1000"
+                    android:textStyle="bold"
+                    tools:text="animated" />
+            </FrameLayout>
         </LinearLayout>
 
         <ProgressBar

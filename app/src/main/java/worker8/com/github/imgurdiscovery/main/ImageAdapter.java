@@ -82,9 +82,11 @@ public class ImageAdapter extends BaseAdapter {
         LinearLayout container = ButterKnife.findById(convertView, R.id.card_image_container);
         container.setLayoutTransition(new LayoutTransition());
         final ImageView imageView = ButterKnife.findById(convertView, R.id.row_main_iv_image);
+        final TextView tagTV = ButterKnife.findById(convertView, R.id.row_main_tv_tag);
+
         ProgressBar progressBar = ButterKnife.findById(convertView, R.id.card_image_pb_loading);
 
-        clearView(titleTV, authorTV, imageView, progressBar);
+        clearView(titleTV, tagTV, authorTV, imageView, progressBar);
 
         String titleText = HtmlFormatter.from(imgurData.getAccount_url()).fontColor("#01579B").bold().getHtmlString();
 //        titleText += HtmlFormatter.from(Constant.MIDDLE_DOT + creationDateFormatted).small().getHtmlString();
@@ -93,10 +95,12 @@ public class ImageAdapter extends BaseAdapter {
         titleTV.setText(imgurData.getTitle());
         if (ImgurLinkDispatcher.getType(imgurData) == ImgurLinkDispatcher.Type.MP4) {
             handleGif(imgurData, imageView, progressBar);
+            tagTV.setText(R.string.animated);
         } else if (ImgurLinkDispatcher.getType(imgurData) == ImgurLinkDispatcher.Type.IMAGE) {
             handleImage(imgurData, imageView, progressBar);
         } else if (ImgurLinkDispatcher.getType(imgurData) == ImgurLinkDispatcher.Type.ALBUM) {
             handleAlbum(imgurData, imageView, progressBar);
+            tagTV.setText(R.string.album);
         }
 
         return convertView;
@@ -133,9 +137,10 @@ public class ImageAdapter extends BaseAdapter {
         });
     }
 
-    private void clearView(TextView titleTV, TextView authorTV, ImageView imageView, ProgressBar progressBar) {
+    private void clearView(TextView titleTV, TextView tagTV, TextView authorTV, ImageView imageView, ProgressBar progressBar) {
         titleTV.setText("");
         authorTV.setText("");
+        tagTV.setText("");
         imageView.getLayoutParams().height = (int) Util.convertDpToPixel(ImagePlaceHolderHeight_dp, activity);
         imageView.setImageResource(android.R.color.transparent);
         imageView.setOnClickListener(null);

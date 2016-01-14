@@ -10,4 +10,6 @@
     <string name="drawer_open_string">Navigation drawer is opened</string>
     <string name="drawer_close_string">Navigation drawer is closed</string>
     <string name="is_selected">" is selected!"</string>
+    <string name="animated">animated</string>
+    <string name="album">album</string>
 </resources>
