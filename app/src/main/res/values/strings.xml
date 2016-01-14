@@ -7,4 +7,6 @@
     <string name="link_is_copied">Link is copied</string>
     <!-- error message-->
     <string name="oops_message">Oops, an error has occurred...</string>
+    <string name="drawer_open_string">Navigation drawer is opened</string>
+    <string name="drawer_close_string">Navigation drawer is closed</string>
 </resources>

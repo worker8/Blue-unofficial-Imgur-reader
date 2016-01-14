@@ -3,6 +3,8 @@ package worker8.com.github.imgurdiscovery.main;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -35,6 +37,10 @@ public class MainActivity extends AppCompatActivity {
     ImageAdapter imageAdapter;
 
     /* UI variables */
+    @Bind(R.id.main_drawer_layout)
+    DrawerLayout mDrawerLayout;
+    @Bind(R.id.nav_lv)
+    ListView navListView;
     @Bind(R.id.main_lv_image_list)
     ListView imageListView;
     @Bind(R.id.main_pb_loading)
@@ -53,6 +59,14 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        /* setup burger menu */
+        ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(
+                this, mDrawerLayout, toolbar, R.string.drawer_open_string, R.string.drawer_close_string);
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        mDrawerToggle.syncState();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
