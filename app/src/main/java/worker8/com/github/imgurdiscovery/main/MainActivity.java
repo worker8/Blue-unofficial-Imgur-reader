@@ -1,11 +1,15 @@
 package worker8.com.github.imgurdiscovery.main;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,10 +17,12 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
+import main.java.com.github.worker8.HtmlFormatter;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -43,10 +49,8 @@ public class MainActivity extends AppCompatActivity {
     String currentSection;
 
     /* UI variables */
-    @Bind(R.id.main_drawer_layout)
-    DrawerLayout drawerLayout;
-    @Bind(R.id.nav_lv)
-    ListView navListView;
+    @Bind(R.id.main_cl)
+    CoordinatorLayout coordinatorLayout;
     @Bind(R.id.main_lv_image_list)
     ListView imageListView;
     @Bind(R.id.main_pb_loading)
@@ -55,6 +59,18 @@ public class MainActivity extends AppCompatActivity {
     ProgressBar progressBarBottom; // this is used when the page is not empty, and when it is loading more
     @Bind(R.id.main_fab)
     FloatingActionButton fab;
+    // nav area
+    @Bind(R.id.main_drawer_layout)
+    DrawerLayout drawerLayout;
+    @Bind(R.id.nav_lv)
+    ListView navListView;
+    // toolbar
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
+    @Bind(R.id.main_toolbar_tv_title)
+    TextView toolbarTitleTV;
+    @Bind(R.id.main_toolbar_tv_section)
+    TextView toolbarSectionTV;
 
     boolean loadMoreLock = false;
 
@@ -66,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         /* setup burger menu */
@@ -75,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.setDrawerListener(mDrawerToggle);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         mDrawerToggle.syncState();
 
         navListView.setAdapter(new NavAdapter(activity));
@@ -88,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         currentSection = ImgurConstant.sectionList.get(0);
+        toolbarSectionTV.setText(currentSection);
         loadMore(currentSection); // default to choose the first one
     }
 
@@ -179,8 +196,21 @@ public class MainActivity extends AppCompatActivity {
      */
     public void onEvent(NewSectionSelectedEvent event) {
         currentSection = event.section;
+        toolbarSectionTV.setText(currentSection);
         reset();
         loadMore(currentSection);
+
+        // show snackbar
+        String pointString = HtmlFormatter.from(currentSection).bold().getHtmlString();
+        pointString += getString(R.string.is_selected);
+        Snackbar snackbar = Snackbar.make(coordinatorLayout, pointString, Snackbar.LENGTH_SHORT);
+        snackbar.show();
+        View sbView = snackbar.getView();
+        sbView.setBackgroundColor(getResources().getColor(R.color.colorPrimaryBlue));
+        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(Color.WHITE);
+        textView.setText(Html.fromHtml(textView.getText().toString()));
+        snackbar.show();
         drawerLayout.closeDrawers();
     }
 

@@ -9,4 +9,5 @@
     <string name="oops_message">Oops, an error has occurred...</string>
     <string name="drawer_open_string">Navigation drawer is opened</string>
     <string name="drawer_close_string">Navigation drawer is closed</string>
+    <string name="is_selected">" is selected!"</string>
 </resources>
