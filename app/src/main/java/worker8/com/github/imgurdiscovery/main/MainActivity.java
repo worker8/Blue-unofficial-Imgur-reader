@@ -66,11 +66,22 @@ public class MainActivity extends AppCompatActivity {
         loadMore();
     }
 
-    public void loadMore() {
+    /**
+     * This method will clear off {@link MainActivity#imgurPaginator}, {@link MainActivity#imageAdapter}
+     */
+    private void reset() {
+        imgurPaginator = null;
+        imageAdapter = null;
+        imageListView.setAdapter(null);
+    }
+
+    private void loadMore() {
         if (imgurPaginator == null) {
             imgurPaginator = new ImgurPaginator();
+            progressBarMiddle.setVisibility(View.VISIBLE);
             progressBarBottom.setVisibility(View.GONE); // don't show for the 1st time
         } else {
+            progressBarMiddle.setVisibility(View.GONE);
             progressBarBottom.setVisibility(View.VISIBLE);
         }
         if (!loadMoreLock) {
@@ -108,7 +119,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void onNewDataLoaded(ImgurPaginationResponse imgurPaginationResponse) {
+    /**
+     * This is called when {@link #loadMore()} obtained more data
+     * @param imgurPaginationResponse data that is loaded by {@link #loadMore()}
+     */
+    private void onNewDataLoaded(ImgurPaginationResponse imgurPaginationResponse) {
         if (imageAdapter == null) {
             imageAdapter = new ImageAdapter(activity, imgurPaginationResponse.getImgurDataList());
             imageListView.setAdapter(imageAdapter);
@@ -160,7 +175,9 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_refresh) {
+            reset();
+            loadMore();
             return true;
         }
 

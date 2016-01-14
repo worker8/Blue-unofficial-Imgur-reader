@@ -5,8 +5,8 @@ import worker8.com.github.jimgur.imgur.ImgurApi;
 public class ImgurPaginator {
     public int currentPage;
     public ImgurPaginationApi imgurPaginationApi;
-    public String section = "hot";
-    public String sort = "viral";
+    public String section = "r/aww";
+    public String sort = "time";
 
     public ImgurPaginator() {
         this(0);
