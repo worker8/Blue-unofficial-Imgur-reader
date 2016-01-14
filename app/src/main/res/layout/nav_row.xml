@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/touch_feedback_blue"
     android:paddingBottom="10dp"
-    android:paddingLeft="@dimen/standard_margin_24dp"
+    android:paddingLeft="@dimen/standard_margin_32dp"
     android:paddingTop="10dp"
     android:textColor="#000000"
     android:textSize="15sp"

@@ -67,10 +67,30 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <View
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:background="@color/colorPrimary" />
+                android:layout_height="100dp">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:adjustViewBounds="true"
+                    android:background="@color/colorPrimary" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginBottom="@dimen/standard_margin_16dp"
+                    android:layout_marginLeft="@dimen/standard_margin_16dp"
+                    android:drawableLeft="@mipmap/imgur_discovery_icon"
+                    android:drawablePadding="@dimen/standard_margin_16dp"
+                    android:gravity="center"
+                    android:text="@string/app_name"
+                    android:textColor="@color/md_white_1000"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </FrameLayout>
 
             <!-- Content Area -->
             <FrameLayout
@@ -86,7 +106,8 @@
                     android:id="@+id/nav_lv"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:divider="@null" />
+                    android:divider="@null"
+                    android:paddingTop="@dimen/standard_margin_16dp" />
             </FrameLayout>
         </LinearLayout>
     </android.support.design.widget.NavigationView>
