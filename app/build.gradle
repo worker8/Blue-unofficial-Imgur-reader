@@ -63,7 +63,8 @@ dependencies {
     compile 'com.android.support:cardview-v7:23.1.1'
     /* Only using it to render Gif */
     compile 'com.facebook.fresco:fresco:0.5.3+'
-
+    /* Inter activity/fragment communication */
+    compile 'de.greenrobot:eventbus:2.4.0'
     testCompile 'junit:junit:4.12'
 
 }

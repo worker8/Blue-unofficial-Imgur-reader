@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_row_tv"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/touch_feedback_blue"
+    android:paddingBottom="10dp"
+    android:paddingLeft="@dimen/standard_margin_24dp"
+    android:paddingTop="10dp"
+    android:textColor="#000000"
+    android:textSize="15sp"
+    tools:text="funny" />

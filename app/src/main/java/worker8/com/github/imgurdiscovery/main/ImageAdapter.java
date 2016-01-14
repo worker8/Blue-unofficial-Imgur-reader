@@ -84,7 +84,7 @@ public class ImageAdapter extends BaseAdapter {
         final ImageView imageView = ButterKnife.findById(convertView, R.id.row_main_iv_image);
         ProgressBar progressBar = ButterKnife.findById(convertView, R.id.card_image_pb_loading);
 
-        clearConvertView(titleTV, authorTV, imageView, progressBar);
+        clearView(titleTV, authorTV, imageView, progressBar);
 
         String titleText = HtmlFormatter.from(imgurData.getAccount_url()).fontColor("#01579B").bold().getHtmlString();
 //        titleText += HtmlFormatter.from(Constant.MIDDLE_DOT + creationDateFormatted).small().getHtmlString();
@@ -133,7 +133,7 @@ public class ImageAdapter extends BaseAdapter {
         });
     }
 
-    private void clearConvertView(TextView titleTV, TextView authorTV, ImageView imageView, ProgressBar progressBar) {
+    private void clearView(TextView titleTV, TextView authorTV, ImageView imageView, ProgressBar progressBar) {
         titleTV.setText("");
         authorTV.setText("");
         imageView.getLayoutParams().height = (int) Util.convertDpToPixel(ImagePlaceHolderHeight_dp, activity);

@@ -17,12 +17,14 @@ import android.widget.ProgressBar;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 import worker8.com.github.imgurdiscovery.R;
+import worker8.com.github.imgurdiscovery.imgur.ImgurConstant;
 import worker8.com.github.imgurdiscovery.util.RxUtils;
 import worker8.com.github.jimgur.imgur.paging_api.ImgurPaginationResponse;
 import worker8.com.github.jimgur.imgur.paging_api.ImgurPaginator;
@@ -35,10 +37,14 @@ public class MainActivity extends AppCompatActivity {
     private CompositeSubscription _subscriptions = new CompositeSubscription();
     private ImgurPaginator imgurPaginator;
     ImageAdapter imageAdapter;
+    /**
+     * currently selected section, changeable from nav drawer
+     */
+    String currentSection;
 
     /* UI variables */
     @Bind(R.id.main_drawer_layout)
-    DrawerLayout mDrawerLayout;
+    DrawerLayout drawerLayout;
     @Bind(R.id.nav_lv)
     ListView navListView;
     @Bind(R.id.main_lv_image_list)
@@ -56,17 +62,20 @@ public class MainActivity extends AppCompatActivity {
         activity = this;
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        EventBus.getDefault().register(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         /* setup burger menu */
         ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(
-                this, mDrawerLayout, toolbar, R.string.drawer_open_string, R.string.drawer_close_string);
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
+                this, drawerLayout, toolbar, R.string.drawer_open_string, R.string.drawer_close_string);
+        drawerLayout.setDrawerListener(mDrawerToggle);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         mDrawerToggle.syncState();
+
+        navListView.setAdapter(new NavAdapter(activity));
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -76,8 +85,8 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-
-        loadMore();
+        currentSection = ImgurConstant.sectionList.get(0);
+        loadMore(currentSection); // default to choose the first one
     }
 
     /**
@@ -89,9 +98,9 @@ public class MainActivity extends AppCompatActivity {
         imageListView.setAdapter(null);
     }
 
-    private void loadMore() {
+    private void loadMore(String section) {
         if (imgurPaginator == null) {
-            imgurPaginator = new ImgurPaginator();
+            imgurPaginator = new ImgurPaginator(section);
             progressBarMiddle.setVisibility(View.VISIBLE);
             progressBarBottom.setVisibility(View.GONE); // don't show for the 1st time
         } else {
@@ -134,8 +143,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * This is called when {@link #loadMore()} obtained more data
-     * @param imgurPaginationResponse data that is loaded by {@link #loadMore()}
+     * This is called when {@link #loadMore(String)} obtained more data
+     *
+     * @param imgurPaginationResponse data that is loaded by {@link #loadMore(String)}
      */
     private void onNewDataLoaded(ImgurPaginationResponse imgurPaginationResponse) {
         if (imageAdapter == null) {
@@ -152,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
                     final int lastItem = firstVisibleItem + visibleItemCount;
                     if (lastItem == totalItemCount) {
                         if (!loadMoreLock) { //to avoid multiple calls for last item
-                            loadMore();
+                            loadMore(currentSection);
                         }
                     }
                 }
@@ -160,6 +170,24 @@ public class MainActivity extends AppCompatActivity {
         }
         imageAdapter.addNewData(imgurPaginationResponse.getData());
         loadMoreLock = false;
+    }
+
+    /**
+     * This is triggered when a new section in the navigational drawer is clicked
+     */
+    public void onEvent(NewSectionSelectedEvent event) {
+        currentSection = event.section;
+        reset();
+        loadMore(currentSection);
+        drawerLayout.closeDrawers();
+    }
+
+    public static class NewSectionSelectedEvent {
+        public String section;
+
+        public NewSectionSelectedEvent(String section) {
+            this.section = section;
+        }
     }
 
     @Override
@@ -172,6 +200,12 @@ public class MainActivity extends AppCompatActivity {
     public void onPause() {
         super.onPause();
         RxUtils.unsubscribeIfNotNull(_subscriptions);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -191,7 +225,7 @@ public class MainActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_refresh) {
             reset();
-            loadMore();
+            loadMore(currentSection);
             return true;
         }
 

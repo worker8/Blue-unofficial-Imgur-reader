@@ -16,6 +16,10 @@ public class ImgurPaginator {
         this.currentPage = currentPage;
     }
 
+    public ImgurPaginator(String section) {
+        this.section = section;
+    }
+
     public static ImgurPaginationApi instantiate() {
         return ImgurApi.getBuilder().create(ImgurPaginationApi.class);
     }
@@ -32,7 +36,7 @@ public class ImgurPaginator {
     /**
      * Reset {@link ImgurPaginator#currentPage} to 0
      */
-    public void resetPage(){
+    public void resetPage() {
         currentPage = 0;
     }
 
