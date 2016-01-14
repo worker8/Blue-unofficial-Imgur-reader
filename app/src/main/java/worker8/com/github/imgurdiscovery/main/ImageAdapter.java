@@ -33,12 +33,22 @@ public class ImageAdapter extends BaseAdapter {
     MainActivity activity;
     LayoutInflater layoutInflater;
     ArrayList<Data> imgurDataList;
+
     public static final int ImagePlaceHolderHeight_dp = 200;
 
     public ImageAdapter(MainActivity activity, ArrayList<Data> imgurDataList) {
         this.activity = activity;
         this.imgurDataList = imgurDataList;
         layoutInflater = activity.getLayoutInflater();
+    }
+
+    public void addNewData(Data[] newDataList) {
+        if (newDataList != null && newDataList.length > 0) {
+            for (int i = 0; i < newDataList.length; i++) {
+                imgurDataList.add(newDataList[i]);
+            }
+        }
+        notifyDataSetChanged();
     }
 
     @Override

@@ -38,4 +38,12 @@
         android:layout_gravity="center"
         android:indeterminate="true" />
 
+    <ProgressBar
+        android:id="@+id/main_pb_bottom_load_more"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:indeterminate="true"
+        android:visibility="gone" />
 </android.support.design.widget.CoordinatorLayout>

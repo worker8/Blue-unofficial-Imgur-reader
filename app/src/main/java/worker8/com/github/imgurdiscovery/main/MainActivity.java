@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
@@ -31,12 +32,17 @@ public class MainActivity extends AppCompatActivity {
     /* data models */
     private CompositeSubscription _subscriptions = new CompositeSubscription();
     private ImgurPaginator imgurPaginator;
+    ImageAdapter imageAdapter;
 
     /* UI variables */
     @Bind(R.id.main_lv_image_list)
     ListView imageListView;
     @Bind(R.id.main_pb_loading)
-    ProgressBar progressBar;
+    ProgressBar progressBarMiddle; // this is used when the page is empty
+    @Bind(R.id.main_pb_bottom_load_more)
+    ProgressBar progressBarBottom; // this is used when the page is not empty, and when it is loading more
+
+    boolean loadMoreLock = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,33 +69,68 @@ public class MainActivity extends AppCompatActivity {
     public void loadMore() {
         if (imgurPaginator == null) {
             imgurPaginator = new ImgurPaginator();
+            progressBarBottom.setVisibility(View.GONE); // don't show for the 1st time
+        } else {
+            progressBarBottom.setVisibility(View.VISIBLE);
         }
-        _subscriptions.add(Observable.just(1)
-                .map(i -> imgurPaginator.next())
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ImgurPaginationResponse>() {
-                    @Override
-                    public void onCompleted() {
-                        Log.d(TAG, "onCompleted: ");
-                        progressBar.setVisibility(View.GONE);
-                    }
+        if (!loadMoreLock) {
+            loadMoreLock = true;
+            _subscriptions.add(Observable.just(1)
+                    .map(i -> imgurPaginator.next())
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<ImgurPaginationResponse>() {
+                        @Override
+                        public void onCompleted() {
+                            Log.d(TAG, "onCompleted: ");
+                            progressBarMiddle.setVisibility(View.GONE);
+                            progressBarBottom.setVisibility(View.GONE);
+                            loadMoreLock = false;
+                        }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.d(TAG, "onError: ");
-                        progressBar.setVisibility(View.GONE);
-                        e.printStackTrace();
-                    }
+                        @Override
+                        public void onError(Throwable e) {
+                            Log.d(TAG, "onError: ");
+                            progressBarMiddle.setVisibility(View.GONE);
+                            progressBarBottom.setVisibility(View.GONE);
+                            loadMoreLock = false;
+                            e.printStackTrace();
+                        }
 
-                    @Override
-                    public void onNext(ImgurPaginationResponse imgurPaginationResponse) {
-                        Log.d(TAG, "onNext: ");
-                        progressBar.setVisibility(View.GONE);
-                        ImageAdapter imageAdapter = new ImageAdapter(activity, imgurPaginationResponse.getImgurDataList());
-                        imageListView.setAdapter(imageAdapter);
+                        @Override
+                        public void onNext(ImgurPaginationResponse imgurPaginationResponse) {
+                            Log.d(TAG, "onNext: ");
+                            progressBarMiddle.setVisibility(View.GONE);
+                            progressBarBottom.setVisibility(View.GONE);
+                            onNewDataLoaded(imgurPaginationResponse);
+                        }
+                    }));
+        }
+    }
+
+    public void onNewDataLoaded(ImgurPaginationResponse imgurPaginationResponse) {
+        if (imageAdapter == null) {
+            imageAdapter = new ImageAdapter(activity, imgurPaginationResponse.getImgurDataList());
+            imageListView.setAdapter(imageAdapter);
+            imageListView.setOnScrollListener(new AbsListView.OnScrollListener() {
+                @Override
+                public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+                }
+
+                @Override
+                public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                    final int lastItem = firstVisibleItem + visibleItemCount;
+                    if (lastItem == totalItemCount) {
+                        if (!loadMoreLock) { //to avoid multiple calls for last item
+                            loadMore();
+                        }
                     }
-                }));
+                }
+            });
+        }
+        imageAdapter.addNewData(imgurPaginationResponse.getData());
+        loadMoreLock = false;
     }
 
     @Override
