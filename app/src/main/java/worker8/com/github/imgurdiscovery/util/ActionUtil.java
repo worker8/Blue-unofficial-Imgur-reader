@@ -20,6 +20,18 @@ public class ActionUtil {
         activity.startActivity(Intent.createChooser(sharingIntent, activity.getString(R.string.share_via)));
     }
 
+    public static void copyText(Context context, String textToBeCopied) {
+        int sdk = android.os.Build.VERSION.SDK_INT;
+        if (sdk < android.os.Build.VERSION_CODES.HONEYCOMB) {
+            android.text.ClipboardManager clipboard = (android.text.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+            clipboard.setText(textToBeCopied);
+        } else {
+            android.content.ClipboardManager clipboard = (android.content.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+            android.content.ClipData clip = android.content.ClipData.newPlainText("", textToBeCopied);
+            clipboard.setPrimaryClip(clip);
+        }
+    }
+
     public static void downloadImage(Activity activity, String url) {
         File direct = new File(Environment.getExternalStorageDirectory()
                 + "/Imgur Discovery");
@@ -44,5 +56,11 @@ public class ActionUtil {
 
         mgr.enqueue(request);
 
+    }
+
+    public static void openInBrowser(Activity activity, String link) {
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_VIEW);
+        sharingIntent.setData(Uri.parse(link));
+        activity.startActivity(sharingIntent);
     }
 }

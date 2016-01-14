@@ -25,24 +25,20 @@ public class GifActivity extends AppCompatActivity {
     public final static String GIF_URL = "GIF_URL";
 
     @Bind(R.id.gif_image)
-    SimpleDraweeView mGifImage;
+    SimpleDraweeView gifImage;
 
     @Bind(R.id.video_view)
-    VideoView mVideoView;
+    VideoView videoView;
 
     @Bind(R.id.gif_close_button)
-    FloatingActionButton mCloseButton;
+    FloatingActionButton closeButton;
 
-    Activity mActivity;
-//    @Bind(R.id.media_controller)
-//    MediaController mMediaController;
-
+    Activity activity;
     String mGifUrl;
 
-    //    TODO: messy code
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        mActivity = this;
+        activity = this;
         super.onCreate(savedInstanceState);
         Fresco.initialize(this);
         setContentView(R.layout.activity_gif);
@@ -56,62 +52,61 @@ public class GifActivity extends AppCompatActivity {
         Log.d("gifactivity", "onCreate: mGifUrl = " + mGifUrl);
         if (mGifUrl != null && mGifUrl.length() > 0) {
             if (mGifUrl.endsWith(".mp4")) {
-                mGifImage.setVisibility(View.GONE);
+                gifImage.setVisibility(View.GONE);
                 Uri uri = Uri.parse(mGifUrl); //Declare your url here.
                 final MediaControllerWithCallback mediaController = new MediaControllerWithCallback(this);
                 mediaController.mOnShowListener = new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mCloseButton.setVisibility(View.VISIBLE);
+                        closeButton.setVisibility(View.VISIBLE);
                     }
                 };
                 mediaController.mOnHideListener = new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mCloseButton.setVisibility(View.GONE);
+                        closeButton.setVisibility(View.GONE);
                     }
                 };
-                mVideoView.setZOrderOnTop(true);
-                mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                videoView.setZOrderOnTop(true);
+                videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                     @Override
                     public void onPrepared(MediaPlayer mp) {
-                        Log.d("ddw", "onPrepared");
                         mp.setLooping(true);
                         mp.setOnInfoListener(new MediaPlayer.OnInfoListener() {
                             @Override
                             public boolean onInfo(MediaPlayer mp, int what, int extra) {
                                 if (what == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
-                                    ((ViewGroup) mCloseButton.getParent()).removeView(mCloseButton);
-                                    mVideoView.setZOrderMediaOverlay(false);
-                                    ((FrameLayout) mediaController.getParent()).addView(mCloseButton);
-                                    mCloseButton.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-                                    int margin = (int) Util.convertDpToPixel(10, mActivity);
-                                    ((FrameLayout.LayoutParams) mCloseButton.getLayoutParams()).setMargins(0, margin, margin, 0);
+                                    ((ViewGroup) closeButton.getParent()).removeView(closeButton);
+                                    videoView.setZOrderMediaOverlay(false);
+                                    ((FrameLayout) mediaController.getParent()).addView(closeButton);
+                                    closeButton.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+                                    int margin = (int) Util.convertDpToPixel(10, activity);
+                                    ((FrameLayout.LayoutParams) closeButton.getLayoutParams()).setMargins(0, margin, margin, 0);
                                 }
                                 return false;
                             }
                         });
-//                    mVideoView.setBackgroundColor(android.R.color.transparent);
-//                        mVideoView.setVisibility(View.VISIBLE);
+//                    videoView.setBackgroundColor(android.R.color.transparent);
+//                        videoView.setVisibility(View.VISIBLE);
 //                    mp.setOnVideoSizeChangedListener(new MediaPlayer.OnVideoSizeChangedListener() {
 //                        @Override
 //                        public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
                         //                        // add media controller
-                        //                        mVideoView.setMediaController(mediaController);
+                        //                        videoView.setMediaController(mediaController);
                         //                        // and set its position on screen
-                        //                        mediaController.setAnchorView(mVideoView);
+                        //                        mediaController.setAnchorView(videoView);
 //                        }
 //                    });
                     }
 
                 });
-                mediaController.setAnchorView(mVideoView);
+                mediaController.setAnchorView(videoView);
 
-                mVideoView.setMediaController(mediaController);
+                videoView.setMediaController(mediaController);
 
-                mVideoView.setVideoURI(uri);
-                mVideoView.requestFocus();
-                mVideoView.start();
+                videoView.setVideoURI(uri);
+                videoView.requestFocus();
+                videoView.start();
             }
         }
     }
@@ -119,8 +114,8 @@ public class GifActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (mVideoView != null) {
-            mVideoView.start();
+        if (videoView != null) {
+            videoView.start();
         }
 
     }

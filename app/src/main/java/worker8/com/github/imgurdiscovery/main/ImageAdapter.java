@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +29,7 @@ public class ImageAdapter extends BaseAdapter {
     MainActivity activity;
     LayoutInflater layoutInflater;
     ArrayList<Data> imgurDataList;
+    public static final int ImagePlaceHolderHeight_dp = 200;
 
     public ImageAdapter(MainActivity activity, ArrayList<Data> imgurDataList) {
         this.activity = activity;
@@ -73,15 +73,11 @@ public class ImageAdapter extends BaseAdapter {
         authorTV.setText(Html.fromHtml(titleText), TextView.BufferType.SPANNABLE);
 
         titleTV.setText(imgurData.getTitle());
-//        switch ()
         if (ImgurLinkDispatcher.getType(imgurData) == ImgurLinkDispatcher.Type.MP4) {
-            Log.d("ddw", imgurData.getTitle() + " : mp4");
             handleGif(imgurData, imageView);
         } else if (ImgurLinkDispatcher.getType(imgurData) == ImgurLinkDispatcher.Type.IMAGE) {
-            Log.d("ddw", imgurData.getTitle() + " : image");
             handleImage(imgurData, imageView);
         } else if (ImgurLinkDispatcher.getType(imgurData) == ImgurLinkDispatcher.Type.ALBUM) {
-            Log.d("ddw", imgurData.getTitle() + " : album");
             handleAlbum(imgurData, imageView);
         }
 
@@ -90,7 +86,6 @@ public class ImageAdapter extends BaseAdapter {
 
     private void handleAlbum(Data imgurData, ImageView imageView) {
         String coverLink = ImgurLinkDispatcher.getImageLinkFromAlbumCover(imgurData.getCover());
-        Log.d("ImageAdapter", "handleAlbum() called with: " + "cover link = [" + coverLink + "], imageView = [" + imageView + "]");
         ImageLoader.getInstance().loadImage(coverLink, new SimpleImageLoadingListener() {
             @Override
             public void onLoadingComplete(String imageUri, View view, Bitmap bitmap) {
@@ -109,7 +104,8 @@ public class ImageAdapter extends BaseAdapter {
         ImageLoader.getInstance().loadImage(imgurData.getLink(), new SimpleImageLoadingListener() {
             @Override
             public void onLoadingComplete(String imageUri, View view, Bitmap bitmap) {
-                int calculatedHeight = (int) ((float) bitmap.getHeight() / (float) bitmap.getWidth() * imageView.getWidth());
+                float scaleFactor = (float) bitmap.getHeight() / (float) bitmap.getWidth();
+                int calculatedHeight = (int) (scaleFactor * imageView.getWidth());
 
                 // image
                 imageView.getLayoutParams().height = calculatedHeight;
@@ -121,7 +117,6 @@ public class ImageAdapter extends BaseAdapter {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("ImageAdapter", "image onClick: ");
                 Intent intent = new Intent(activity, ImageActivity.class);
                 intent.setData(Uri.parse(imgurData.getLink()));
                 activity.startActivity(intent);
@@ -157,7 +152,7 @@ public class ImageAdapter extends BaseAdapter {
     private void clearConvertView(TextView titleTV, TextView authorTV, ImageView imageView) {
         titleTV.setText("");
         authorTV.setText("");
-        imageView.getLayoutParams().height = (int) Util.convertDpToPixel(150, activity);
+        imageView.getLayoutParams().height = (int) Util.convertDpToPixel(ImagePlaceHolderHeight_dp, activity);
         imageView.setImageResource(android.R.color.transparent);
         imageView.setOnClickListener(null);
     }

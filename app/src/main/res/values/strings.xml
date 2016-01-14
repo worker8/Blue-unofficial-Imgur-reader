@@ -4,4 +4,7 @@
     <string name="invalid_gif_link">Invalid gif link</string>
     <string name="share_via">Share via</string>
     <string name="Share">Share</string>
+    <string name="link_is_copied">Link is copied</string>
+    <!-- error message-->
+    <string name="oops_message">Oops, an error has occurred...</string>
 </resources>

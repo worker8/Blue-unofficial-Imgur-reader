@@ -3,10 +3,10 @@ package worker8.com.github.imgurdiscovery.public_activities;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.davemorrissey.labs.subscaleview.ImageSource;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
@@ -24,47 +24,43 @@ import worker8.com.github.imgurdiscovery.R;
 import worker8.com.github.imgurdiscovery.util.ActionUtil;
 import worker8.com.github.imgurdiscovery.util.Util;
 
+/**
+ * Activity that handles non-animated image
+ */
 public class ImageActivity extends AppCompatActivity {
     @Bind(R.id.image_viewer_image)
-    PhotoView mImageView;
+    PhotoView imageView;
     @Bind(R.id.image_viewer_progress_bar)
-    ProgressBar mProgressBar;
+    ProgressBar progressBar;
     @Bind(R.id.image_viewer_image_deepzoom)
-    SubsamplingScaleImageView mImageViewDeepZoom;
+    SubsamplingScaleImageView imageViewDeepZoom;
 
-    ImageActivity mActivity;
-
-    public final static String ORIGINAL_LINK = "ORIGINAL_LINK";
-    //    String mOriginalLink;
+    ImageActivity activity;
     String mUrl;
     Bitmap mDownloadedBitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mActivity = this;
+        activity = this;
         setContentView(R.layout.activity_image_viewer);
         ButterKnife.bind(this);
         mUrl = getIntent().getDataString();
-//        mOriginalLink = getIntent().getStringExtra(ORIGINAL_LINK);
-
-        Log.d("ddw", "ImageLoader.getInstance(): " + ImageLoader.getInstance());
-        Log.d("ddw", "[ImageActivity] getIntent().getDataString(): " + mUrl);
 
         ImageLoader.getInstance().loadImage(mUrl, new SimpleImageLoadingListener() {
             @Override
             public void onLoadingComplete(String imageUri, View view, Bitmap bitmap) {
                 mDownloadedBitmap = bitmap;
-                mImageView.setImageBitmap(bitmap);
+                imageView.setImageBitmap(bitmap);
                 // progress bar
-                mProgressBar.setVisibility(View.GONE);
+                progressBar.setVisibility(View.GONE);
             }
         });
 
-        mImageView.setOnViewTapListener(new PhotoViewAttacher.OnViewTapListener() {
+        imageView.setOnViewTapListener(new PhotoViewAttacher.OnViewTapListener() {
             @Override
             public void onViewTap(View view, float x, float y) {
-                mActivity.finish();
+                activity.finish();
             }
         });
 
@@ -74,70 +70,79 @@ public class ImageActivity extends AppCompatActivity {
         finish();
     }
 
-//    public void onOpenInBrowserClicked(View button) {
-//        ActionUtil.openInBrowser(mActivity, mUrl);
-//    }
+    public void onOpenInBrowserClicked(View button) {
+        ActionUtil.openInBrowser(activity, mUrl);
+    }
 
-//    public void onCopyClicked(View button) {
-//        ActionUtil.copyText(mActivity, mOriginalLink);
-//        Toast.makeText(mActivity, "Copied!", Toast.LENGTH_SHORT).show();
-//    }
+    public void onCopyClicked(View button) {
+        ActionUtil.copyText(activity, mUrl);
+        Toast.makeText(activity, activity.getString(R.string.link_is_copied), Toast.LENGTH_SHORT).show();
+    }
 
-//    public void onShareClicked(View button) {
-//        if (mOriginalLink != null) {
-//            ActionUtil.shareUrl(mActivity, mOriginalLink);
-//        } else {
-//            ActionUtil.shareUrl(mActivity, mUrl);
-//        }
-//
-//    }
+    public void onShareClicked(View button) {
+        ActionUtil.shareUrl(activity, mUrl);
+    }
 
     public void onDownloadClicked(View button) {
         ActionUtil.downloadImage(this, mUrl);
     }
 
     public void onHDClicked(final View button) {
-        String linkToBeLoaded;
-        if (mUrl != null) {
-            linkToBeLoaded = mUrl;
-        } else {
-            linkToBeLoaded = mUrl;
-        }
-//            Intent webviewActivityIntent = new Intent(mActivity, WebViewActivity.class);
-//            webviewActivityIntent.putExtra(WebViewActivity.WEBVIEW_URL, mOriginalLink);
-//            mActivity.startActivity(webviewActivityIntent);
-        mProgressBar.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
         new Thread(new Runnable() {
             @Override
             public void run() {
                 DisplayImageOptions displayImageOptions = new DisplayImageOptions.Builder()
                         .imageScaleType(ImageScaleType.NONE)
                         .build();
-                ImageLoader.getInstance().loadImage(linkToBeLoaded, displayImageOptions, new SimpleImageLoadingListener() {
+                ImageLoader.getInstance().loadImage(mUrl, displayImageOptions, new SimpleImageLoadingListener() {
                     private void toggleVisibility() {
-                        mImageView.setVisibility(View.GONE);
-                        mImageViewDeepZoom.setVisibility(View.VISIBLE);
-                        mImageViewDeepZoom.setOnClickListener(new View.OnClickListener() {
+                        imageView.setVisibility(View.GONE);
+                        imageViewDeepZoom.setVisibility(View.VISIBLE);
+                        imageViewDeepZoom.setOnClickListener(new View.OnClickListener() {
 
                             @Override
                             public void onClick(View v) {
-                                mActivity.finish();
+                                activity.finish();
                             }
                         });
                     }
 
                     @Override
                     public void onLoadingComplete(String imageUri, View view, Bitmap bitmap) {
-                        String path = Util.writeBitmapToFile(mActivity, "tempDeepZoomImage", bitmap);
-                        Log.d("ddw", "onHDClicked absolute Path:" + path);
-                        mActivity.runOnUiThread(new Runnable() {
+                        String path = Util.writeBitmapToFile(activity, "worker8.com.github.imgurdiscovery-tempDeepZoomImage", bitmap);
+                        activity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                imageViewDeepZoom.setImage(ImageSource.uri(path));
                                 toggleVisibility();
-                                mProgressBar.setVisibility(View.GONE);
-                                mImageViewDeepZoom.setImage(ImageSource.uri(path));
-//                                    ImageViewColorChanger.changeIconColor((ImageView)button, mActivity.getResources().getColor(R.color.colorAccent));
-                                ((ImageView) button).setColorFilter(mActivity.getResources().getColor(R.color.colorAccent));
+
+                                imageViewDeepZoom.setOnImageEventListener(new SubsamplingScaleImageView.DefaultOnImageEventListener() {
+                                    @Override
+                                    public void onImageLoaded() {
+                                        progressBar.setVisibility(View.GONE);
+                                        ((ImageView) button).setColorFilter(activity.getResources().getColor(R.color.colorPrimaryBlueDark));
+                                    }
+
+                                    @Override
+                                    public void onPreviewLoadError(Exception e) {
+                                        e.printStackTrace();
+                                        Toast.makeText(activity, getString(R.string.oops_message), Toast.LENGTH_SHORT).show();
+                                    }
+
+                                    @Override
+                                    public void onImageLoadError(Exception e) {
+                                        e.printStackTrace();
+                                        Toast.makeText(activity, getString(R.string.oops_message), Toast.LENGTH_SHORT).show();
+                                    }
+
+                                    @Override
+                                    public void onTileLoadError(Exception e) {
+                                        e.printStackTrace();
+                                        Toast.makeText(activity, getString(R.string.oops_message), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+
                             }
                         });
                     }
@@ -156,8 +161,5 @@ public class ImageActivity extends AppCompatActivity {
                 });
             }
         }).start();
-
-
-//        }
     }
 }
