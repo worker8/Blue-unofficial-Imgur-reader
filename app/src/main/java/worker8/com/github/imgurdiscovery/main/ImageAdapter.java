@@ -1,5 +1,6 @@
 package worker8.com.github.imgurdiscovery.main;
 
+import android.animation.LayoutTransition;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -9,9 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.util.ArrayList;
@@ -65,8 +69,12 @@ public class ImageAdapter extends BaseAdapter {
         /* find views + clearing them */
         TextView titleTV = ButterKnife.findById(convertView, R.id.row_main_tv_title);
         TextView authorTV = ButterKnife.findById(convertView, R.id.row_main_tv_author);
+        LinearLayout container = ButterKnife.findById(convertView, R.id.card_image_container);
+        container.setLayoutTransition(new LayoutTransition());
         final ImageView imageView = ButterKnife.findById(convertView, R.id.row_main_iv_image);
-        clearConvertView(titleTV, authorTV, imageView);
+        ProgressBar progressBar = ButterKnife.findById(convertView, R.id.card_image_pb_loading);
+
+        clearConvertView(titleTV, authorTV, imageView, progressBar);
 
         String titleText = HtmlFormatter.from(imgurData.getAccount_url()).fontColor("#01579B").bold().getHtmlString();
 //        titleText += HtmlFormatter.from(Constant.MIDDLE_DOT + creationDateFormatted).small().getHtmlString();
@@ -74,46 +82,23 @@ public class ImageAdapter extends BaseAdapter {
 
         titleTV.setText(imgurData.getTitle());
         if (ImgurLinkDispatcher.getType(imgurData) == ImgurLinkDispatcher.Type.MP4) {
-            handleGif(imgurData, imageView);
+            handleGif(imgurData, imageView, progressBar);
         } else if (ImgurLinkDispatcher.getType(imgurData) == ImgurLinkDispatcher.Type.IMAGE) {
-            handleImage(imgurData, imageView);
+            handleImage(imgurData, imageView, progressBar);
         } else if (ImgurLinkDispatcher.getType(imgurData) == ImgurLinkDispatcher.Type.ALBUM) {
-            handleAlbum(imgurData, imageView);
+            handleAlbum(imgurData, imageView, progressBar);
         }
 
         return convertView;
     }
 
-    private void handleAlbum(Data imgurData, ImageView imageView) {
+    private void handleAlbum(Data imgurData, ImageView imageView, ProgressBar progressBar) {
         String coverLink = ImgurLinkDispatcher.getImageLinkFromAlbumCover(imgurData.getCover());
-        ImageLoader.getInstance().loadImage(coverLink, new SimpleImageLoadingListener() {
-            @Override
-            public void onLoadingComplete(String imageUri, View view, Bitmap bitmap) {
-                int calculatedHeight = (int) ((float) bitmap.getHeight() / (float) bitmap.getWidth() * imageView.getWidth());
-
-                // image
-                imageView.getLayoutParams().height = calculatedHeight;
-                imageView.setImageBitmap(bitmap);
-                // TODO: hide the progress bar
-
-            }
-        });
+        ImageLoader.getInstance().loadImage(coverLink, new CardImageLoadingListener(imageView, progressBar));
     }
 
-    private void handleImage(Data imgurData, ImageView imageView) {
-        ImageLoader.getInstance().loadImage(imgurData.getLink(), new SimpleImageLoadingListener() {
-            @Override
-            public void onLoadingComplete(String imageUri, View view, Bitmap bitmap) {
-                float scaleFactor = (float) bitmap.getHeight() / (float) bitmap.getWidth();
-                int calculatedHeight = (int) (scaleFactor * imageView.getWidth());
-
-                // image
-                imageView.getLayoutParams().height = calculatedHeight;
-                imageView.setImageBitmap(bitmap);
-                // TODO: hide the progress bar
-
-            }
-        });
+    private void handleImage(Data imgurData, ImageView imageView, ProgressBar progressBar) {
+        ImageLoader.getInstance().loadImage(imgurData.getLink(), new CardImageLoadingListener(imageView, progressBar));
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -124,21 +109,10 @@ public class ImageAdapter extends BaseAdapter {
         });
     }
 
-    private void handleGif(Data imgurData, ImageView imageView) {
+    private void handleGif(Data imgurData, ImageView imageView, ProgressBar progressBar) {
         final String thumbnail = imgurData.getLink().replace(".mp4", "l.png");
 
-        ImageLoader.getInstance().loadImage(thumbnail, new SimpleImageLoadingListener() {
-            @Override
-            public void onLoadingComplete(String imageUri, View view, Bitmap bitmap) {
-                int calculatedHeight = (int) ((float) bitmap.getHeight() / (float) bitmap.getWidth() * imageView.getWidth());
-
-                // image
-                imageView.getLayoutParams().height = calculatedHeight;
-                imageView.setImageBitmap(bitmap);
-                // TODO: hide the progress bar
-
-            }
-        });
+        ImageLoader.getInstance().loadImage(thumbnail, new CardImageLoadingListener(imageView, progressBar));
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -149,11 +123,44 @@ public class ImageAdapter extends BaseAdapter {
         });
     }
 
-    private void clearConvertView(TextView titleTV, TextView authorTV, ImageView imageView) {
+    private void clearConvertView(TextView titleTV, TextView authorTV, ImageView imageView, ProgressBar progressBar) {
         titleTV.setText("");
         authorTV.setText("");
         imageView.getLayoutParams().height = (int) Util.convertDpToPixel(ImagePlaceHolderHeight_dp, activity);
         imageView.setImageResource(android.R.color.transparent);
         imageView.setOnClickListener(null);
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    public class CardImageLoadingListener extends SimpleImageLoadingListener {
+        ImageView imageView;
+        ProgressBar progressBar;
+
+        public CardImageLoadingListener(ImageView imageView, ProgressBar progressBar) {
+            this.imageView = imageView;
+            this.progressBar = progressBar;
+        }
+
+        @Override
+        public void onLoadingComplete(String imageUri, View view, Bitmap bitmap) {
+            int calculatedHeight = (int) ((float) bitmap.getHeight() / (float) bitmap.getWidth() * imageView.getWidth());
+
+            // image
+            imageView.getLayoutParams().height = calculatedHeight;
+            imageView.setImageBitmap(bitmap);
+            progressBar.setVisibility(View.GONE);
+        }
+
+        @Override
+        public void onLoadingCancelled(String imageUri, View view) {
+            super.onLoadingCancelled(imageUri, view);
+            progressBar.setVisibility(View.GONE);
+        }
+
+        @Override
+        public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+            super.onLoadingFailed(imageUri, view, failReason);
+            progressBar.setVisibility(View.GONE);
+        }
     }
 }

@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -34,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
     /* UI variables */
     @Bind(R.id.main_lv_image_list)
     ListView imageListView;
+    @Bind(R.id.main_pb_loading)
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,17 +72,20 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onCompleted() {
                         Log.d(TAG, "onCompleted: ");
+                        progressBar.setVisibility(View.GONE);
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         Log.d(TAG, "onError: ");
+                        progressBar.setVisibility(View.GONE);
                         e.printStackTrace();
                     }
 
                     @Override
                     public void onNext(ImgurPaginationResponse imgurPaginationResponse) {
                         Log.d(TAG, "onNext: ");
+                        progressBar.setVisibility(View.GONE);
                         ImageAdapter imageAdapter = new ImageAdapter(activity, imgurPaginationResponse.getImgurDataList());
                         imageListView.setAdapter(imageAdapter);
                     }
