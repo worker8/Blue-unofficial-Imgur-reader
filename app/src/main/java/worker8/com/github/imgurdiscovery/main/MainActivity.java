@@ -2,7 +2,6 @@ package worker8.com.github.imgurdiscovery.main;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +25,7 @@ import rx.subscriptions.CompositeSubscription;
 import worker8.com.github.imgurdiscovery.R;
 import worker8.com.github.imgurdiscovery.imgur.ImgurConstant;
 import worker8.com.github.imgurdiscovery.util.RxUtils;
+import worker8.com.github.imgurdiscovery.util.Util;
 import worker8.com.github.jimgur.imgur.paging_api.ImgurPaginationResponse;
 import worker8.com.github.jimgur.imgur.paging_api.ImgurPaginator;
 
@@ -53,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
     ProgressBar progressBarMiddle; // this is used when the page is empty
     @Bind(R.id.main_pb_bottom_load_more)
     ProgressBar progressBarBottom; // this is used when the page is not empty, and when it is loading more
+    @Bind(R.id.main_fab)
+    FloatingActionButton fab;
 
     boolean loadMoreLock = false;
 
@@ -77,12 +79,12 @@ public class MainActivity extends AppCompatActivity {
 
         navListView.setAdapter(new NavAdapter(activity));
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                int randomSectionPosition = Util.randInt(0, ImgurConstant.sectionList.size() - 1);
+                String section = ImgurConstant.sectionList.get(randomSectionPosition);
+                EventBus.getDefault().post(new MainActivity.NewSectionSelectedEvent(section));
             }
         });
         currentSection = ImgurConstant.sectionList.get(0);
