@@ -6,7 +6,8 @@ public class ImgurPaginator {
     public int currentPage;
     public ImgurPaginationApi imgurPaginationApi;
     public String section = "r/aww";
-    public String sort = "time";
+    public String sortImgur = "viral";
+    public String sortReddit = "hot";
 
     public ImgurPaginator() {
         this(0);
@@ -28,7 +29,12 @@ public class ImgurPaginator {
         if (imgurPaginationApi == null) {
             imgurPaginationApi = ImgurPaginator.instantiate();
         }
-        ImgurPaginationResponse tempResponse = imgurPaginationApi.getImgurPage(section, sort, currentPage);
+        ImgurPaginationResponse tempResponse;
+        if (section.contains("r/")) {
+            tempResponse = imgurPaginationApi.getImgurPage(section, sortReddit, currentPage);
+        } else {
+            tempResponse = imgurPaginationApi.getImgurPage(section, sortImgur, currentPage);
+        }
         currentPage++;
         return tempResponse;
     }

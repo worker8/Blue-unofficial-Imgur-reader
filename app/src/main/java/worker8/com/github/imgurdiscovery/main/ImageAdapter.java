@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.text.Html;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import butterknife.ButterKnife;
 import main.java.com.github.worker8.HtmlFormatter;
@@ -27,6 +29,7 @@ import worker8.com.github.imgurdiscovery.imgur.ImgurLinkDispatcher;
 import worker8.com.github.imgurdiscovery.imgur_album.ImgurAlbumActivity;
 import worker8.com.github.imgurdiscovery.public_activities.GifActivity;
 import worker8.com.github.imgurdiscovery.public_activities.ImageActivity;
+import worker8.com.github.imgurdiscovery.util.Constant;
 import worker8.com.github.imgurdiscovery.util.Util;
 import worker8.com.github.jimgur.imgur.paging_api.Data;
 
@@ -90,9 +93,12 @@ public class ImageAdapter extends BaseAdapter {
         clearView(titleTV, tagTV, authorTV, imageView, progressBar);
 
         String titleText = HtmlFormatter.from(imgurData.getAccount_url()).fontColor("#01579B").bold().getHtmlString();
-//        titleText += HtmlFormatter.from(Constant.MIDDLE_DOT + creationDateFormatted).small().getHtmlString();
-        authorTV.setText(Html.fromHtml(titleText), TextView.BufferType.SPANNABLE);
+        long time = Long.parseLong(imgurData.getDatetime()) * 1000;
 
+        String creationDateFormatted = DateUtils.getRelativeTimeSpanString(time,
+                new Date().getTime(), DateUtils.FORMAT_ABBREV_RELATIVE).toString().toLowerCase();
+        titleText += HtmlFormatter.from(Constant.MIDDLE_DOT + creationDateFormatted).small().getHtmlString();
+        authorTV.setText(Html.fromHtml(titleText), TextView.BufferType.SPANNABLE);
         titleTV.setText(imgurData.getTitle());
         if (ImgurLinkDispatcher.getType(imgurData) == ImgurLinkDispatcher.Type.MP4) {
             handleGif(imgurData, imageView, progressBar);
