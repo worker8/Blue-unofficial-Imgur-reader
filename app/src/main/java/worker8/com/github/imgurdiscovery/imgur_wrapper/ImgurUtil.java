@@ -4,7 +4,16 @@ import android.text.TextUtils;
 
 import java.util.regex.Pattern;
 
+/**
+ * A class that provides static methods for manipulating imgur links
+ */
 public class ImgurUtil {
+    public enum LinkMatch {
+        NONE,
+        IMGUR_DIRECT_LINK,
+        IMGUR_IMAGE_URL_QUERY,
+    }
+
     private static final String REGEX_IMGUR_IMAGE_URL_QUERY = "^([hH][tT][tT][pP]|[hH][tT][tT][pP][sS]):\\/\\/" +
             "(m.imgur.com|imgur.com|i.imgur.com)\\/(?!=\\/)(\\w+)(.jpg|.jpeg|.png)\\?\\w+$";
     private static final Pattern PATTERN_IMGUR_IMAGE_URL_QUERY = Pattern.compile(REGEX_IMGUR_IMAGE_URL_QUERY);
@@ -29,19 +38,13 @@ public class ImgurUtil {
         }
     }
 
-    public enum LinkMatch {
-        NONE,
-        IMGUR_DIRECT_LINK,
-        IMGUR_IMAGE_URL_QUERY,
-    }
-
-    public static String getLowResImgurLink(String imgurLink){
+    public static String getLowResImgurLink(String imgurLink) {
         String temp = String.copyValueOf(imgurLink.toCharArray());
         LinkMatch linkMatch = findLinkMatch(temp);
         if (linkMatch == LinkMatch.IMGUR_DIRECT_LINK || linkMatch == LinkMatch.IMGUR_IMAGE_URL_QUERY) {
-            temp = temp.replace(".jpg","h.jpg");
-            temp = temp.replace(".jpeg","h.jpeg");
-            temp = temp.replace(".png","h.png");
+            temp = temp.replace(".jpg", "h.jpg");
+            temp = temp.replace(".jpeg", "h.jpeg");
+            temp = temp.replace(".png", "h.png");
             return temp;
         } else {
             return imgurLink;
@@ -50,7 +53,6 @@ public class ImgurUtil {
 
     /**
      * Find the type of imgur link that belongs to the id
-     *
      * @param url
      * @return
      */

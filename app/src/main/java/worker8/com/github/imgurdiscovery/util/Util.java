@@ -21,6 +21,9 @@ import java.lang.ref.WeakReference;
 import java.util.Date;
 import java.util.Random;
 
+/**
+ * Reusable and convenient class for doing generic tasks
+ */
 public class Util {
     public static boolean isNetworkAvailable(Context context) {
         ConnectivityManager connectivityManager
@@ -101,7 +104,7 @@ public class Util {
         Log.d("ddw", "writeBitmapToFile external path:" + path);
 
         OutputStream fOut = null;
-        File file = new File(path, fileName+".png"); // the File to save to
+        File file = new File(path, fileName + ".png"); // the File to save to
         Log.d("ddw", "writeBitmapToFile file.getAbsolutePath:" + file.getAbsolutePath());
         try {
             fOut = new FileOutputStream(file);
@@ -144,7 +147,7 @@ public class Util {
         return randomNum;
     }
 
-    public static String getRelativeDateTimeFromEpochString(String epoch){
+    public static String getRelativeDateTimeFromEpochString(String epoch) {
         long time = Long.parseLong(epoch) * 1000;
 
         return DateUtils.getRelativeTimeSpanString(time,

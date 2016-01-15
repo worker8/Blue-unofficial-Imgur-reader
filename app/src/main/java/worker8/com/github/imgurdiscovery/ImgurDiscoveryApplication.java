@@ -20,10 +20,14 @@ public class ImgurDiscoveryApplication extends Application {
         initImageLoader(getApplicationContext());
     }
 
+    /**
+     * @see <a href="https://github.com/nostra13/Android-Universal-Image-Loader/wiki/Useful-Info">Universal Image Loader configuration info</a>
+     * @param context
+     *
+     */
     public static void initImageLoader(Context context) {
-        // https://github.com/nostra13/Android-Universal-Image-Loader/wiki/Useful-Info
 
-        /* enable cache */
+        /* Enable cache */
         DisplayImageOptions displayImageOptions = new DisplayImageOptions.Builder()
                 .cacheInMemory(true)
                 .cacheOnDisk(true)

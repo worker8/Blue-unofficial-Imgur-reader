@@ -2,7 +2,13 @@ package worker8.com.github.imgurdiscovery.imgur_wrapper;
 
 import java.util.ArrayList;
 
+/**
+ * Imgur specific constants
+ */
 public class ImgurConstant {
+    /**
+     * This is the list of <i>imgur sections</i> that is used in the {@link android.support.design.widget.NavigationView NavigationView}
+     */
     public static ArrayList<String> sectionList;
 
     static {

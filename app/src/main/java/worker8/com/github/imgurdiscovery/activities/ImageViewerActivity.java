@@ -25,7 +25,7 @@ import worker8.com.github.imgurdiscovery.util.ActionUtil;
 import worker8.com.github.imgurdiscovery.util.Util;
 
 /**
- * Activity that handles non-animated image
+ * Activity that handles non-animated image from imgur, such as .png .jpeg
  */
 public class ImageViewerActivity extends AppCompatActivity {
     @Bind(R.id.image_viewer_image)
@@ -87,6 +87,16 @@ public class ImageViewerActivity extends AppCompatActivity {
         ActionUtil.downloadImage(this, mUrl);
     }
 
+    /**
+     * The purpose of this button is to enable deep zooming
+     * Some images are really huge, such as images from imgur.com/r/earthporn, it can be 5000x6000 from some super duper camera
+     * If we try to load it into a normal {@link ImageView}, we will get out of memory error
+     * Luckily, very smart programmer shares an open source library called <a href="https://github.com/davemorrissey/subsampling-scale-image-view">Subsampling Scale Image View</a>
+     * {@link SubsamplingScaleImageView} is able to load super large images without error and provides smooth scrolling
+     * TODO: this sometimes failed for very long images... need troubleshooting
+     * @param button
+     * @see <a href="https://github.com/davemorrissey/subsampling-scale-image-view">Subsampling scale image view github page</a>
+     */
     public void onHDClicked(final View button) {
         progressBar.setVisibility(View.VISIBLE);
         new Thread(new Runnable() {

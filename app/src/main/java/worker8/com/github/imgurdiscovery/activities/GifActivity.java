@@ -22,6 +22,12 @@ import worker8.com.github.imgurdiscovery.R;
 import worker8.com.github.imgurdiscovery.custom_view.MediaControllerWithCallback;
 import worker8.com.github.imgurdiscovery.util.Util;
 
+/**
+ * This activity is responsible of handling all animated type of images in imgur.
+ * Imgur animated images can come in a few types of extension: .gif .gifv .webm .mp4
+ * Since Android's {@link VideoView} is able to play .mp4 out of the box,
+ * .gif .gifv .webm are all turned into .mp4 and being rendered as .mp4
+ */
 public class GifActivity extends AppCompatActivity {
     public final static String GIF_URL = "GIF_URL";
 
@@ -50,8 +56,9 @@ public class GifActivity extends AppCompatActivity {
             Toast.makeText(GifActivity.this, R.string.invalid_gif_link, Toast.LENGTH_SHORT).show();
             finish();
         }
-        Log.d("gifactivity", "onCreate: mGifUrl = " + mGifUrl);
+        Log.d("GifActivity", "onCreate: mGifUrl = " + mGifUrl);
         if (mGifUrl != null && mGifUrl.length() > 0) {
+            // links that are passed in are assumed to be .mp4, otherwise, do not feed into VideoView
             if (mGifUrl.endsWith(".mp4")) {
                 gifImage.setVisibility(View.GONE);
                 Uri uri = Uri.parse(mGifUrl); //Declare your id here.
@@ -87,17 +94,6 @@ public class GifActivity extends AppCompatActivity {
                                 return false;
                             }
                         });
-//                    videoView.setBackgroundColor(android.R.color.transparent);
-//                        videoView.setVisibility(View.VISIBLE);
-//                    mp.setOnVideoSizeChangedListener(new MediaPlayer.OnVideoSizeChangedListener() {
-//                        @Override
-//                        public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
-                        //                        // add media controller
-                        //                        videoView.setMediaController(mediaController);
-                        //                        // and set its position on screen
-                        //                        mediaController.setAnchorView(videoView);
-//                        }
-//                    });
                     }
 
                 });

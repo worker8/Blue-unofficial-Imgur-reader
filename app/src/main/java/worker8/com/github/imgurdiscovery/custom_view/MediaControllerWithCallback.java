@@ -4,6 +4,11 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.MediaController;
 
+/**
+ * Adds 2 callback hook to {@link MediaController},
+ * it can be useful to show/hide something such as a close button,
+ * at the same time as of media controller UI is shown/hidden
+ */
 public class MediaControllerWithCallback extends MediaController {
     public OnClickListener mOnShowListener, mOnHideListener;
 

@@ -2,6 +2,22 @@ package worker8.com.github.imgurdiscovery.imgur_wrapper;
 
 import worker8.com.github.jimgur.imgur.paging_api.Data;
 
+/**
+ * <pre>
+ * Imgur posts come in various different format, it can mainly be broken down into 3 categories:
+ * - normal image (.png .jpeg)
+ * - animated image (.gif .gifv .webm .mp4)
+ * - album (it contains a link to multiple images)
+ *
+ * This class is used to detect and dispatch the work to appropriate activities
+ *
+ * Activities vs type of categories it handles:
+ *
+ * - normal image is handled by {@link worker8.com.github.imgurdiscovery.activities.ImageViewerActivity ImageViewerActivity}
+ * - animated image is handled by {@link worker8.com.github.imgurdiscovery.activities.GifActivity GifActivity}
+ * - album is handled by {@link worker8.com.github.imgurdiscovery.activities.imgur_album_activity.ImgurAlbumActivity ImgurAlbumActivity}
+ * </pre>
+ */
 public class ImgurLinkDispatcher {
     public enum Type {
         GIF, GIFV, ALBUM, GALLERY, IMAGE, MP4, WEBM

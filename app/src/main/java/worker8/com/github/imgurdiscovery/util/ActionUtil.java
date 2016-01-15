@@ -11,6 +11,10 @@ import java.io.File;
 
 import worker8.com.github.imgurdiscovery.R;
 
+/**
+ * A class that provides static reusable methods to accomplish commonly used actions
+ * such as: sharing, download an image, open a link in browser, copy some text, etc
+ */
 public class ActionUtil {
 
     public static void shareUrl(Activity activity, String url) {

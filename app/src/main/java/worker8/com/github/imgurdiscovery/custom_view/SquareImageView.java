@@ -5,7 +5,7 @@ import android.util.AttributeSet;
 import android.widget.ImageView;
 
 /**
- * This will force the imageview to become square
+ * This is an {@link ImageView} that will ignore the height, it will always be a square, following the width spec
  */
 public class SquareImageView extends ImageView {
 
