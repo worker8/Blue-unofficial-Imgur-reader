@@ -1,16 +1,28 @@
 ## Imgur-Discovery
-This is a simple imgur client for browsing and discovering images from imgur.com
+This is an Android application that lets you browse and discover images from [imgur.com](http://imgur.com). While this does not serve as a complete client for imgur.com, it provides a clean and intuitive UI for browsing.
+
+#### Features
+* Browse imgur.com
+* Switch to different imgur section
+* Popular list of imgur section
+* Support gif, gifv, webm, mp4 rendering
+* Support imgur album in swiping mode
+* Image deep zooming mode
+* Sharing image link
+* Download image
+* Open image in browser
+* Copy image link
+
+## Screenshots
+![](http://i.imgur.com/hMZWvYlm.png) ![](http://i.imgur.com/wvyLURtm.png) ![](http://i.imgur.com/C0OdYYsm.png)
+
+[**Click here** for more](http://imgur.com/a/nVI0C)
 
 ## Project Setup
 1. Make sure you are running jdk8 because this project uses retrolambda that depends on java 8 features, refer to this:
 https://github.com/evant/gradle-retrolambda
 2. `git clone` this project
 3. Open the project and let gradle sync, it should run just fine. otherwise, file an issue
-
-## Screenshots
-![](http://i.imgur.com/hMZWvYlm.png) ![](http://i.imgur.com/wvyLURtm.png) ![](http://i.imgur.com/C0OdYYsm.png)
-
-[**Click here** for more](http://imgur.com/a/nVI0C)
 
 ## Code explanation
 #### Main Flow
