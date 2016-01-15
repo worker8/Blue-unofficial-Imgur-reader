@@ -1,4 +1,4 @@
-package worker8.com.github.imgurdiscovery.public_activities;
+package worker8.com.github.imgurdiscovery.activities;
 
 import android.app.Activity;
 import android.media.MediaPlayer;
@@ -19,6 +19,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import worker8.com.github.imgurdiscovery.R;
+import worker8.com.github.imgurdiscovery.custom_view.MediaControllerWithCallback;
 import worker8.com.github.imgurdiscovery.util.Util;
 
 public class GifActivity extends AppCompatActivity {

@@ -1,4 +1,4 @@
-package worker8.com.github.imgurdiscovery.imgur;
+package worker8.com.github.imgurdiscovery.imgur_wrapper;
 
 import worker8.com.github.jimgur.imgur.paging_api.Data;
 

@@ -1,4 +1,4 @@
-package worker8.com.github.imgurdiscovery.public_activities;
+package worker8.com.github.imgurdiscovery.activities;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;

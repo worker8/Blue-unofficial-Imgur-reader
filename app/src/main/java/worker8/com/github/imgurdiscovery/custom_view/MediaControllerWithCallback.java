@@ -1,4 +1,4 @@
-package worker8.com.github.imgurdiscovery.public_activities;
+package worker8.com.github.imgurdiscovery.custom_view;
 
 import android.content.Context;
 import android.util.AttributeSet;

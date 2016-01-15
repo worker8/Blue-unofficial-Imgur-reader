@@ -1,4 +1,4 @@
-package worker8.com.github.imgurdiscovery.main;
+package worker8.com.github.imgurdiscovery.activities.main_activity;
 
 import android.animation.LayoutTransition;
 import android.content.Intent;
@@ -23,11 +23,11 @@ import java.util.ArrayList;
 import butterknife.ButterKnife;
 import main.java.com.github.worker8.HtmlFormatter;
 import worker8.com.github.imgurdiscovery.R;
-import worker8.com.github.imgurdiscovery.imgur.ImgurLinkDispatcher;
-import worker8.com.github.imgurdiscovery.imgur.ImgurUtil;
-import worker8.com.github.imgurdiscovery.imgur_album.ImgurAlbumActivity;
-import worker8.com.github.imgurdiscovery.public_activities.GifActivity;
-import worker8.com.github.imgurdiscovery.public_activities.ImageActivity;
+import worker8.com.github.imgurdiscovery.imgur_wrapper.ImgurLinkDispatcher;
+import worker8.com.github.imgurdiscovery.imgur_wrapper.ImgurUtil;
+import worker8.com.github.imgurdiscovery.activities.imgur_album_activity.ImgurAlbumActivity;
+import worker8.com.github.imgurdiscovery.activities.GifActivity;
+import worker8.com.github.imgurdiscovery.activities.ImageActivity;
 import worker8.com.github.imgurdiscovery.util.Constant;
 import worker8.com.github.imgurdiscovery.util.Util;
 import worker8.com.github.jimgur.imgur.paging_api.Data;
