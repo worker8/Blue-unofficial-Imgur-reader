@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- note the visibility being set to 'gone', it is not used for < API 19
+     because we cannot make the status bar transparent -->
+<View xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fake_status_bar"
+    android:layout_width="wrap_content"
+    android:layout_height="@dimen/status_bar_height"
+    android:background="@color/colorPrimaryDark"
+    android:visibility="gone" />

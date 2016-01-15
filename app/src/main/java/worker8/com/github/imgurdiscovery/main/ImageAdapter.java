@@ -24,6 +24,7 @@ import butterknife.ButterKnife;
 import main.java.com.github.worker8.HtmlFormatter;
 import worker8.com.github.imgurdiscovery.R;
 import worker8.com.github.imgurdiscovery.imgur.ImgurLinkDispatcher;
+import worker8.com.github.imgurdiscovery.imgur_album.ImgurAlbumActivity;
 import worker8.com.github.imgurdiscovery.public_activities.GifActivity;
 import worker8.com.github.imgurdiscovery.public_activities.ImageActivity;
 import worker8.com.github.imgurdiscovery.util.Util;
@@ -96,11 +97,14 @@ public class ImageAdapter extends BaseAdapter {
         if (ImgurLinkDispatcher.getType(imgurData) == ImgurLinkDispatcher.Type.MP4) {
             handleGif(imgurData, imageView, progressBar);
             tagTV.setText(R.string.animated);
+            tagTV.setVisibility(View.VISIBLE);
         } else if (ImgurLinkDispatcher.getType(imgurData) == ImgurLinkDispatcher.Type.IMAGE) {
             handleImage(imgurData, imageView, progressBar);
+            tagTV.setVisibility(View.GONE);
         } else if (ImgurLinkDispatcher.getType(imgurData) == ImgurLinkDispatcher.Type.ALBUM) {
             handleAlbum(imgurData, imageView, progressBar);
             tagTV.setText(R.string.album);
+            tagTV.setVisibility(View.VISIBLE);
         }
 
         return convertView;
@@ -109,6 +113,14 @@ public class ImageAdapter extends BaseAdapter {
     private void handleAlbum(Data imgurData, ImageView imageView, ProgressBar progressBar) {
         String coverLink = ImgurLinkDispatcher.getImageLinkFromAlbumCover(imgurData.getCover());
         ImageLoader.getInstance().loadImage(coverLink, new CardImageLoadingListener(imageView, progressBar));
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(activity, ImgurAlbumActivity.class);
+                intent.setData(Uri.parse(imgurData.getId()));
+                activity.startActivity(intent);
+            }
+        });
     }
 
     private void handleImage(Data imgurData, ImageView imageView, ProgressBar progressBar) {
@@ -141,6 +153,7 @@ public class ImageAdapter extends BaseAdapter {
         titleTV.setText("");
         authorTV.setText("");
         tagTV.setText("");
+        tagTV.setVisibility(View.GONE);
         imageView.getLayoutParams().height = (int) Util.convertDpToPixel(ImagePlaceHolderHeight_dp, activity);
         imageView.setImageResource(android.R.color.transparent);
         imageView.setOnClickListener(null);

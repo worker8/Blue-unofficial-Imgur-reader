@@ -29,6 +29,10 @@
             android:name="worker8.com.github.imgurdiscovery.public_activities.ImageActivity"
             android:label="Image Viewer"
             android:theme="@style/Theme.Transparent" />
+        <activity
+            android:name=".imgur_album.ImgurAlbumActivity"
+            android:label="Imgur Album"
+            android:theme="@style/ImgurAlbumTheme" />
     </application>
 
 </manifest>

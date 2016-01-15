@@ -53,7 +53,7 @@ public class GifActivity extends AppCompatActivity {
         if (mGifUrl != null && mGifUrl.length() > 0) {
             if (mGifUrl.endsWith(".mp4")) {
                 gifImage.setVisibility(View.GONE);
-                Uri uri = Uri.parse(mGifUrl); //Declare your url here.
+                Uri uri = Uri.parse(mGifUrl); //Declare your id here.
                 final MediaControllerWithCallback mediaController = new MediaControllerWithCallback(this);
                 mediaController.mOnShowListener = new View.OnClickListener() {
                     @Override
