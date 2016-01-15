@@ -39,6 +39,19 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    sourceSets {
+        main {
+            res.srcDirs =
+                    [
+                            'src/main/res/layouts/imgur_album_activity',
+                            'src/main/res/layouts/main_activity',
+                            'src/main/res/layouts/activities',
+                            'src/main/res/layouts/shared',
+                            'src/main/res/layouts/',
+                            'src/main/res'
+                    ]
+        }
+    }
 }
 
 dependencies {

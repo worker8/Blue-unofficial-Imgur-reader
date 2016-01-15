@@ -35,7 +35,7 @@ public class NavAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = activity.getLayoutInflater().inflate(R.layout.nav_row, null);
+            convertView = activity.getLayoutInflater().inflate(R.layout.row_nav_drawer, null);
         }
         TextView navRowTV = ButterKnife.findById(convertView, R.id.nav_row_tv);
         clearView(navRowTV);

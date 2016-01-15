@@ -26,7 +26,7 @@
             android:label="Gif Activity"
             android:theme="@style/Theme.Transparent" />
         <activity
-            android:name="worker8.com.github.imgurdiscovery.activities.ImageActivity"
+            android:name=".activities.ImageViewerActivity"
             android:label="Image Viewer"
             android:theme="@style/Theme.Transparent" />
         <activity

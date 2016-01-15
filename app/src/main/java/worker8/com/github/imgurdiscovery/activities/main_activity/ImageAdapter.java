@@ -27,7 +27,7 @@ import worker8.com.github.imgurdiscovery.imgur_wrapper.ImgurLinkDispatcher;
 import worker8.com.github.imgurdiscovery.imgur_wrapper.ImgurUtil;
 import worker8.com.github.imgurdiscovery.activities.imgur_album_activity.ImgurAlbumActivity;
 import worker8.com.github.imgurdiscovery.activities.GifActivity;
-import worker8.com.github.imgurdiscovery.activities.ImageActivity;
+import worker8.com.github.imgurdiscovery.activities.ImageViewerActivity;
 import worker8.com.github.imgurdiscovery.util.Constant;
 import worker8.com.github.imgurdiscovery.util.Util;
 import worker8.com.github.jimgur.imgur.paging_api.Data;
@@ -77,7 +77,7 @@ public class ImageAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         Data imgurData = imgurDataList.get(position);
         if (convertView == null) {
-            convertView = layoutInflater.inflate(R.layout.row_image, null);
+            convertView = layoutInflater.inflate(R.layout.row_image_card, null);
         }
         /* find views + clearing them */
         TextView titleTV = ButterKnife.findById(convertView, R.id.row_main_tv_title);
@@ -135,7 +135,7 @@ public class ImageAdapter extends BaseAdapter {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(activity, ImageActivity.class);
+                Intent intent = new Intent(activity, ImageViewerActivity.class);
                 intent.setData(Uri.parse(imgurData.getLink()));
                 activity.startActivity(intent);
             }

@@ -27,7 +27,7 @@ import worker8.com.github.imgurdiscovery.util.Util;
 /**
  * Activity that handles non-animated image
  */
-public class ImageActivity extends AppCompatActivity {
+public class ImageViewerActivity extends AppCompatActivity {
     @Bind(R.id.image_viewer_image)
     PhotoView imageView;
     @Bind(R.id.image_viewer_progress_bar)
@@ -35,7 +35,7 @@ public class ImageActivity extends AppCompatActivity {
     @Bind(R.id.image_viewer_image_deepzoom)
     SubsamplingScaleImageView imageViewDeepZoom;
 
-    ImageActivity activity;
+    ImageViewerActivity activity;
     String mUrl;
     Bitmap mDownloadedBitmap;
 
