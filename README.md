@@ -5,9 +5,11 @@ This is an Android application that lets you browse and discover images from [im
 * Browse imgur.com
 * Switch to different imgur section
 * Popular list of imgur section
+* Floating Action Button for picking a random imgur section (fun!)
 * Support gif, gifv, webm, mp4 rendering
 * Support imgur album in swiping mode
 * Image deep zooming mode
+* Loading low but good enough image resolution to speed up & save data
 * Sharing image link
 * Download image
 * Open image in browser
