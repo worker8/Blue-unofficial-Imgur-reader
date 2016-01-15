@@ -72,6 +72,9 @@ public class MainActivity extends AppCompatActivity {
     @Bind(R.id.main_toolbar_tv_section)
     TextView toolbarSectionTV;
 
+    /**
+     * This variable is used to serve as a simple lock to prevent making multiple calls to load more content when we hit the bottom of the list
+     */
     boolean loadMoreLock = false;
 
     @Override
@@ -117,12 +120,38 @@ public class MainActivity extends AppCompatActivity {
         imageListView.setAdapter(null);
     }
 
+    Snackbar connectionSnackbar;
+
+    /**
+     * This is the most interesting method in this activity.
+     * It loads more content
+     * @param section imgur has different 'section', example input "hot", "top", "r/aww", "r/pics"
+     */
     private void loadMore(String section) {
+        // do not proceed without internet connection
+        if (!Util.isNetworkAvailable(this)) {
+            connectionSnackbar = Snackbar.make(coordinatorLayout, "Please check your internet connection, and hit refresh...", Snackbar.LENGTH_INDEFINITE);
+            View sbView = connectionSnackbar.getView();
+            sbView.setBackgroundColor(getResources().getColor(R.color.colorPrimaryBlue));
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.WHITE);
+            connectionSnackbar.show();
+            progressBarMiddle.setVisibility(View.GONE);
+            progressBarBottom.setVisibility(View.GONE);
+            return;
+        } else {
+            if (connectionSnackbar != null && connectionSnackbar.isShown()) {
+                connectionSnackbar.dismiss();
+            }
+        }
+
         if (imgurPaginator == null) {
+            // this will run when this activity is launched for the 1st time (when the page is blank)
             imgurPaginator = new ImgurPaginator(section);
             progressBarMiddle.setVisibility(View.VISIBLE);
             progressBarBottom.setVisibility(View.GONE); // don't show for the 1st time
         } else {
+            // subsequent call to load more will enter the else block
             progressBarMiddle.setVisibility(View.GONE);
             progressBarBottom.setVisibility(View.VISIBLE);
         }

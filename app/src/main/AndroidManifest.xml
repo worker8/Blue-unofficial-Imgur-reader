@@ -3,8 +3,8 @@
     package="worker8.com.github.imgurdiscovery">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
     <application
         android:name=".ImgurDiscoveryApplication"
         android:allowBackup="true"
@@ -15,6 +15,7 @@
         <activity
             android:name=".activities.main_activity.MainActivity"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,14 +25,17 @@
         <activity
             android:name=".activities.GifActivity"
             android:label="Gif Activity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.Transparent" />
         <activity
             android:name=".activities.ImageViewerActivity"
             android:label="Image Viewer"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.Transparent" />
         <activity
             android:name=".activities.imgur_album_activity.ImgurAlbumActivity"
             android:label="Imgur Album"
+            android:screenOrientation="portrait"
             android:theme="@style/ImgurAlbumTheme" />
     </application>
 
