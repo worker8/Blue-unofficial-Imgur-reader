@@ -24,6 +24,7 @@ import butterknife.ButterKnife;
 import main.java.com.github.worker8.HtmlFormatter;
 import worker8.com.github.imgurdiscovery.R;
 import worker8.com.github.imgurdiscovery.imgur.ImgurLinkDispatcher;
+import worker8.com.github.imgurdiscovery.imgur.ImgurUtil;
 import worker8.com.github.imgurdiscovery.imgur_album.ImgurAlbumActivity;
 import worker8.com.github.imgurdiscovery.public_activities.GifActivity;
 import worker8.com.github.imgurdiscovery.public_activities.ImageActivity;
@@ -94,7 +95,9 @@ public class ImageAdapter extends BaseAdapter {
         String authorText = HtmlFormatter.from(imgurData.getAccount_url()).fontColor("#01579B").bold().getHtmlString();
         authorText += HtmlFormatter.from(Constant.MIDDLE_DOT + Util.getRelativeDateTimeFromEpochString(imgurData.getDatetime())).small().getHtmlString();
         authorText += HtmlFormatter.from(Constant.MIDDLE_DOT + imgurData.getScore() + " points").small().getHtmlString();
-        authorText += HtmlFormatter.from(Constant.MIDDLE_DOT + imgurData.getComment_count() + " comments").small().getHtmlString();
+        if (imgurData.getComment_count() != null && !imgurData.getComment_count().equals("")) {
+            authorText += HtmlFormatter.from(Constant.MIDDLE_DOT + imgurData.getComment_count() + " comments").small().getHtmlString();
+        }
         authorTV.setText(Html.fromHtml(authorText), TextView.BufferType.SPANNABLE);
 
         titleTV.setText(imgurData.getTitle());
@@ -128,7 +131,7 @@ public class ImageAdapter extends BaseAdapter {
     }
 
     private void handleImage(Data imgurData, ImageView imageView, ProgressBar progressBar) {
-        ImageLoader.getInstance().loadImage(imgurData.getLink(), new CardImageLoadingListener(imageView, progressBar));
+        ImageLoader.getInstance().loadImage(ImgurUtil.getLowResImgurLink(imgurData.getLink()), new CardImageLoadingListener(imageView, progressBar));
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

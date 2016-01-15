@@ -31,9 +31,9 @@ public class ImgurPaginator {
         }
         ImgurPaginationResponse tempResponse;
         if (section.contains("r/")) {
-            tempResponse = imgurPaginationApi.getImgurPage(section, sortReddit, currentPage);
+            tempResponse = imgurPaginationApi.getImgurPage(section.toLowerCase(), sortReddit.toLowerCase(), currentPage);
         } else {
-            tempResponse = imgurPaginationApi.getImgurPage(section, sortImgur, currentPage);
+            tempResponse = imgurPaginationApi.getImgurPage(section.toLowerCase(), sortImgur.toLowerCase(), currentPage);
         }
         currentPage++;
         return tempResponse;

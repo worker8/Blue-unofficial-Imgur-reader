@@ -35,6 +35,19 @@ public class ImgurUtil {
         IMGUR_IMAGE_URL_QUERY,
     }
 
+    public static String getLowResImgurLink(String imgurLink){
+        String temp = String.copyValueOf(imgurLink.toCharArray());
+        LinkMatch linkMatch = findLinkMatch(temp);
+        if (linkMatch == LinkMatch.IMGUR_DIRECT_LINK || linkMatch == LinkMatch.IMGUR_IMAGE_URL_QUERY) {
+            temp = temp.replace(".jpg","h.jpg");
+            temp = temp.replace(".jpeg","h.jpeg");
+            temp = temp.replace(".png","h.png");
+            return temp;
+        } else {
+            return imgurLink;
+        }
+    }
+
     /**
      * Find the type of imgur link that belongs to the id
      *

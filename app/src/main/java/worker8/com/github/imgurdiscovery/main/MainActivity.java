@@ -103,9 +103,9 @@ public class MainActivity extends AppCompatActivity {
                 EventBus.getDefault().post(new MainActivity.NewSectionSelectedEvent(section));
             }
         });
-        currentSection = ImgurConstant.sectionList.get(0);
+        currentSection = ImgurConstant.sectionList.get(6); // default to choose r/art
         toolbarSectionTV.setText(currentSection);
-        loadMore(currentSection); // default to choose the first one
+        loadMore(currentSection);
     }
 
     /**
