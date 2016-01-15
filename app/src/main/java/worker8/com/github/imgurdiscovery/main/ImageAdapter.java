@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.text.Html;
-import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +19,6 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import butterknife.ButterKnife;
 import main.java.com.github.worker8.HtmlFormatter;
@@ -92,13 +90,13 @@ public class ImageAdapter extends BaseAdapter {
 
         clearView(titleTV, tagTV, authorTV, imageView, progressBar);
 
-        String titleText = HtmlFormatter.from(imgurData.getAccount_url()).fontColor("#01579B").bold().getHtmlString();
-        long time = Long.parseLong(imgurData.getDatetime()) * 1000;
+        // example output: joe_dude . 2 hours ago . 123 points . 543 comments
+        String authorText = HtmlFormatter.from(imgurData.getAccount_url()).fontColor("#01579B").bold().getHtmlString();
+        authorText += HtmlFormatter.from(Constant.MIDDLE_DOT + Util.getRelativeDateTimeFromEpochString(imgurData.getDatetime())).small().getHtmlString();
+        authorText += HtmlFormatter.from(Constant.MIDDLE_DOT + imgurData.getScore() + " points").small().getHtmlString();
+        authorText += HtmlFormatter.from(Constant.MIDDLE_DOT + imgurData.getComment_count() + " comments").small().getHtmlString();
+        authorTV.setText(Html.fromHtml(authorText), TextView.BufferType.SPANNABLE);
 
-        String creationDateFormatted = DateUtils.getRelativeTimeSpanString(time,
-                new Date().getTime(), DateUtils.FORMAT_ABBREV_RELATIVE).toString().toLowerCase();
-        titleText += HtmlFormatter.from(Constant.MIDDLE_DOT + creationDateFormatted).small().getHtmlString();
-        authorTV.setText(Html.fromHtml(titleText), TextView.BufferType.SPANNABLE);
         titleTV.setText(imgurData.getTitle());
         if (ImgurLinkDispatcher.getType(imgurData) == ImgurLinkDispatcher.Type.MP4) {
             handleGif(imgurData, imageView, progressBar);

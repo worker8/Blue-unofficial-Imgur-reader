@@ -38,7 +38,8 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/standard_margin_8dp">
 
                 <TextView
                     android:id="@+id/row_main_tv_author"

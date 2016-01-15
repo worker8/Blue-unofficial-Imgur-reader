@@ -8,6 +8,7 @@ import android.graphics.Point;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Environment;
+import android.text.format.DateUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
@@ -17,6 +18,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.ref.WeakReference;
+import java.util.Date;
 import java.util.Random;
 
 public class Util {
@@ -140,5 +142,12 @@ public class Util {
         int randomNum = rand.nextInt((max - min) + 1) + min;
 
         return randomNum;
+    }
+
+    public static String getRelativeDateTimeFromEpochString(String epoch){
+        long time = Long.parseLong(epoch) * 1000;
+
+        return DateUtils.getRelativeTimeSpanString(time,
+                new Date().getTime(), DateUtils.FORMAT_ABBREV_RELATIVE).toString().toLowerCase();
     }
 }
