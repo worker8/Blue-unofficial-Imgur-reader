@@ -57,6 +57,7 @@ When the image is clicked, `ImgurLinkDispatcher.java` will determine which type 
 * Long images become blurry (because the ImageView fit by scaling to width)
 * Long title get cut off in image cardview (need to show the full title in ImageViewerActivity and GifActivity
 * Crash is reported for clicking on HD mode (need more info on this)
+* Crash might happen if you tap on HD button before the non-HD image is loaded
 
 
 ## Future improvements
