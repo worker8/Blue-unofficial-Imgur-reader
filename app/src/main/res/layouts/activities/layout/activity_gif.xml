@@ -12,13 +12,6 @@
         android:layout_gravity="center"
         android:indeterminate="true" />
 
-    <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/gif_image"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        fresco:actualImageScaleType="fitCenter" />
-
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/gif_close_button"
         android:layout_width="wrap_content"

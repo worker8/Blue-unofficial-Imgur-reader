@@ -86,10 +86,15 @@ public class ImgurAlbumFragment extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        if (activity.albumData instanceof AlbumResponse) {
-            images = ((AlbumResponse) activity.albumData).getData().getImages();
-        } else {
-            images = ((GalleryResponse) activity.albumData).getData().getImages();
+        try {
+            if (activity.albumData instanceof AlbumResponse) {
+                images = ((AlbumResponse) activity.albumData).getData().getImages();
+            } else {
+                images = ((GalleryResponse) activity.albumData).getData().getImages();
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+            getActivity().finish();
         }
 
         View rootView = inflater.inflate(R.layout.fragment_imgur_album, container, false);

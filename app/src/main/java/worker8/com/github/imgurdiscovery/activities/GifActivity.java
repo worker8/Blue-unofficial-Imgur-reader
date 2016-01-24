@@ -13,9 +13,6 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 import android.widget.VideoView;
 
-import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.view.SimpleDraweeView;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import worker8.com.github.imgurdiscovery.R;
@@ -31,9 +28,6 @@ import worker8.com.github.imgurdiscovery.util.Util;
 public class GifActivity extends AppCompatActivity {
     public final static String GIF_URL = "GIF_URL";
 
-    @Bind(R.id.gif_image)
-    SimpleDraweeView gifImage;
-
     @Bind(R.id.video_view)
     VideoView videoView;
 
@@ -47,7 +41,6 @@ public class GifActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         activity = this;
         super.onCreate(savedInstanceState);
-        Fresco.initialize(this);
         setContentView(R.layout.activity_gif);
         ButterKnife.bind(this);
 
@@ -60,7 +53,6 @@ public class GifActivity extends AppCompatActivity {
         if (mGifUrl != null && mGifUrl.length() > 0) {
             // links that are passed in are assumed to be .mp4, otherwise, do not feed into VideoView
             if (mGifUrl.endsWith(".mp4")) {
-                gifImage.setVisibility(View.GONE);
                 Uri uri = Uri.parse(mGifUrl); //Declare your id here.
                 final MediaControllerWithCallback mediaController = new MediaControllerWithCallback(this);
                 mediaController.mOnShowListener = new View.OnClickListener() {
