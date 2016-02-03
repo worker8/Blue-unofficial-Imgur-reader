@@ -28,6 +28,7 @@ public class ImgurConstant {
         sectionList.add("r/MildlyInteresting");
         sectionList.add("r/awwnverts");
         sectionList.add("r/corgi");
+		sectionList.add("r/CityPorn");
     }
 
 }
