@@ -1,5 +1,8 @@
-## Imgur-Discovery
+## Blue: unofficial Imgur reader
 This is an Android application that lets you browse and discover images from [imgur.com](http://imgur.com). While this does not serve as a complete client for imgur.com, it provides a clean and intuitive UI for browsing.
+
+### Playstore Link
+https://play.google.com/store/apps/details?id=worker8.com.github.imgurblue
 
 #### Features
 * Browse imgur.com
