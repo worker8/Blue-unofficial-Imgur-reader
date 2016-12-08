@@ -42,12 +42,7 @@ public class NavAdapter extends BaseAdapter {
 
         String section = ImgurConstant.sectionList.get(position);
         navRowTV.setText(section);
-        convertView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EventBus.getDefault().post(new MainActivity.NewSectionSelectedEvent(section));
-            }
-        });
+        convertView.setOnClickListener(v -> EventBus.getDefault().post(new MainActivity.NewSectionSelectedEvent(section)));
         return convertView;
     }
 

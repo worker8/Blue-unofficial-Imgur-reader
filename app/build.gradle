@@ -10,7 +10,9 @@ buildscript {
     }
 }
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'android-apt'
 
 android {
     compileSdkVersion 25
@@ -51,6 +53,7 @@ android {
                             'src/main/res'
                     ]
         }
+        main.java.srcDirs += 'src/main/kotlin'
     }
 }
 
@@ -78,4 +81,10 @@ dependencies {
     compile 'de.greenrobot:eventbus:2.4.0'
     testCompile 'junit:junit:4.12'
 
+    apt 'com.rejasupotaro:kvs-schema-compiler:5.0.1'
+    compile 'com.rejasupotaro:kvs-schema:5.0.1'
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+}
+repositories {
+    mavenCentral()
 }

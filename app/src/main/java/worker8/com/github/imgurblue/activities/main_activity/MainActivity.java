@@ -30,6 +30,7 @@ import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 import worker8.com.github.imgurblue.R;
 import worker8.com.github.imgurblue.imgur_wrapper.ImgurConstant;
+import worker8.com.github.imgurblue.pref.GeneralPref;
 import worker8.com.github.imgurblue.util.RxUtils;
 import worker8.com.github.imgurblue.util.Util;
 import worker8.com.github.jimgur.imgur.paging_api.ImgurPaginationResponse;
@@ -106,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
                 EventBus.getDefault().post(new MainActivity.NewSectionSelectedEvent(section));
             }
         });
-        currentSection = ImgurConstant.sectionList.get(6); // default to choose r/art
+        currentSection = GeneralPref.get(this).getLastVisitedSub();
         toolbarSectionTV.setText(currentSection);
         loadMore(currentSection);
     }
@@ -225,6 +226,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void onEvent(NewSectionSelectedEvent event) {
         currentSection = event.section;
+        GeneralPref.get(this).setLastVisitedSub(currentSection);
         toolbarSectionTV.setText(currentSection);
         reset();
         loadMore(currentSection);
