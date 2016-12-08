@@ -1,4 +1,4 @@
-package worker8.com.github.imgurdiscovery.activities.main_activity;
+package worker8.com.github.imgurblue.activities.main_activity;
 
 import android.animation.LayoutTransition;
 import android.content.Intent;
@@ -22,14 +22,14 @@ import java.util.ArrayList;
 
 import butterknife.ButterKnife;
 import main.java.com.github.worker8.HtmlFormatter;
-import worker8.com.github.imgurdiscovery.R;
-import worker8.com.github.imgurdiscovery.imgur_wrapper.ImgurLinkDispatcher;
-import worker8.com.github.imgurdiscovery.imgur_wrapper.ImgurUtil;
-import worker8.com.github.imgurdiscovery.activities.imgur_album_activity.ImgurAlbumActivity;
-import worker8.com.github.imgurdiscovery.activities.GifActivity;
-import worker8.com.github.imgurdiscovery.activities.ImageViewerActivity;
-import worker8.com.github.imgurdiscovery.util.Constant;
-import worker8.com.github.imgurdiscovery.util.Util;
+import worker8.com.github.imgurblue.R;
+import worker8.com.github.imgurblue.imgur_wrapper.ImgurLinkDispatcher;
+import worker8.com.github.imgurblue.imgur_wrapper.ImgurUtil;
+import worker8.com.github.imgurblue.activities.imgur_album_activity.ImgurAlbumActivity;
+import worker8.com.github.imgurblue.activities.GifActivity;
+import worker8.com.github.imgurblue.activities.ImageViewerActivity;
+import worker8.com.github.imgurblue.util.Constant;
+import worker8.com.github.imgurblue.util.Util;
 import worker8.com.github.jimgur.imgur.paging_api.Data;
 
 public class ImageAdapter extends BaseAdapter {

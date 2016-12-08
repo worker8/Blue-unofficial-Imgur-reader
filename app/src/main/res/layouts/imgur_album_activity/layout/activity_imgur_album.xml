@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <worker8.com.github.imgurdiscovery.custom_view.HackyViewPager
+    <worker8.com.github.imgurblue.custom_view.HackyViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -12,7 +12,7 @@
         <!--android:src="@drawable/imgur_icon"-->
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="match_parent" />-->
-    </worker8.com.github.imgurdiscovery.custom_view.HackyViewPager>
+    </worker8.com.github.imgurblue.custom_view.HackyViewPager>
 
     <LinearLayout
         android:id="@+id/imgur_grid_container"

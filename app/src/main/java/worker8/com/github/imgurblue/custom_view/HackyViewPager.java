@@ -1,4 +1,4 @@
-package worker8.com.github.imgurdiscovery.custom_view;
+package worker8.com.github.imgurblue.custom_view;
 
 import android.content.Context;
 import android.support.v4.view.ViewPager;

@@ -1,4 +1,4 @@
-package worker8.com.github.imgurdiscovery;
+package worker8.com.github.imgurblue;
 
 import android.app.Application;
 import android.content.Context;
@@ -10,7 +10,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
-public class ImgurDiscoveryApplication extends Application {
+public class ImgurBlueApplication extends Application {
     public void onCreate() {
         super.onCreate();
         if (BuildConfig.DEBUG) {

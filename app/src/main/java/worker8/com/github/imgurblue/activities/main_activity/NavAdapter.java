@@ -1,4 +1,4 @@
-package worker8.com.github.imgurdiscovery.activities.main_activity;
+package worker8.com.github.imgurblue.activities.main_activity;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,8 +7,8 @@ import android.widget.TextView;
 
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
-import worker8.com.github.imgurdiscovery.R;
-import worker8.com.github.imgurdiscovery.imgur_wrapper.ImgurConstant;
+import worker8.com.github.imgurblue.R;
+import worker8.com.github.imgurblue.imgur_wrapper.ImgurConstant;
 
 public class NavAdapter extends BaseAdapter {
     MainActivity activity;

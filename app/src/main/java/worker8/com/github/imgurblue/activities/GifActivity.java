@@ -1,4 +1,4 @@
-package worker8.com.github.imgurdiscovery.activities;
+package worker8.com.github.imgurblue.activities;
 
 import android.app.Activity;
 import android.media.MediaPlayer;
@@ -15,9 +15,9 @@ import android.widget.VideoView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import worker8.com.github.imgurdiscovery.R;
-import worker8.com.github.imgurdiscovery.custom_view.MediaControllerWithCallback;
-import worker8.com.github.imgurdiscovery.util.Util;
+import worker8.com.github.imgurblue.R;
+import worker8.com.github.imgurblue.custom_view.MediaControllerWithCallback;
+import worker8.com.github.imgurblue.util.Util;
 
 /**
  * This activity is responsible of handling all animated type of images in imgur.

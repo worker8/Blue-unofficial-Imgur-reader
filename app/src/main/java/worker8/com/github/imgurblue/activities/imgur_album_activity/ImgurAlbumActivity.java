@@ -1,4 +1,4 @@
-package worker8.com.github.imgurdiscovery.activities.imgur_album_activity;
+package worker8.com.github.imgurblue.activities.imgur_album_activity;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -23,9 +23,9 @@ import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
-import worker8.com.github.imgurdiscovery.R;
-import worker8.com.github.imgurdiscovery.custom_view.HackyViewPager;
-import worker8.com.github.imgurdiscovery.util.RxUtils;
+import worker8.com.github.imgurblue.R;
+import worker8.com.github.imgurblue.custom_view.HackyViewPager;
+import worker8.com.github.imgurblue.util.RxUtils;
 import worker8.com.github.jimgur.imgur.ImgurApi;
 import worker8.com.github.jimgur.imgur.album_api.AlbumResponse;
 import worker8.com.github.jimgur.imgur.gallery_api.GalleryResponse;

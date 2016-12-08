@@ -1,4 +1,4 @@
-package worker8.com.github.imgurdiscovery.activities;
+package worker8.com.github.imgurblue.activities;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -20,9 +20,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import uk.co.senab.photoview.PhotoView;
 import uk.co.senab.photoview.PhotoViewAttacher;
-import worker8.com.github.imgurdiscovery.R;
-import worker8.com.github.imgurdiscovery.util.ActionUtil;
-import worker8.com.github.imgurdiscovery.util.Util;
+import worker8.com.github.imgurblue.R;
+import worker8.com.github.imgurblue.util.ActionUtil;
+import worker8.com.github.imgurblue.util.Util;
 
 /**
  * Activity that handles non-animated image from imgur, such as .png .jpeg
@@ -120,7 +120,7 @@ public class ImageViewerActivity extends AppCompatActivity {
 
                     @Override
                     public void onLoadingComplete(String imageUri, View view, Bitmap bitmap) {
-                        String path = Util.writeBitmapToFile(activity, "worker8.com.github.imgurdiscovery-tempDeepZoomImage", bitmap);
+                        String path = Util.writeBitmapToFile(activity, "worker8.com.github.imgurblue-tempDeepZoomImage", bitmap);
                         activity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {

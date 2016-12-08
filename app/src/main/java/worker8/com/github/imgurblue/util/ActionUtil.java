@@ -1,4 +1,4 @@
-package worker8.com.github.imgurdiscovery.util;
+package worker8.com.github.imgurblue.util;
 
 import android.app.Activity;
 import android.app.DownloadManager;
@@ -9,7 +9,7 @@ import android.os.Environment;
 
 import java.io.File;
 
-import worker8.com.github.imgurdiscovery.R;
+import worker8.com.github.imgurblue.R;
 
 /**
  * A class that provides static reusable methods to accomplish commonly used actions

@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="worker8.com.github.imgurdiscovery">
+    package="worker8.com.github.imgurblue">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <application
-        android:name=".ImgurDiscoveryApplication"
+        android:name="worker8.com.github.imgurblue.ImgurBlueApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/imgur_discovery_icon"
+        android:icon="@mipmap/imgur_blue_icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activities.main_activity.MainActivity"
+            android:name="worker8.com.github.imgurblue.activities.main_activity.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
@@ -23,17 +23,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.GifActivity"
+            android:name="worker8.com.github.imgurblue.activities.GifActivity"
             android:label="Gif Activity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Transparent" />
         <activity
-            android:name=".activities.ImageViewerActivity"
+            android:name="worker8.com.github.imgurblue.activities.ImageViewerActivity"
             android:label="Image Viewer"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Transparent" />
         <activity
-            android:name=".activities.imgur_album_activity.ImgurAlbumActivity"
+            android:name="worker8.com.github.imgurblue.activities.imgur_album_activity.ImgurAlbumActivity"
             android:label="Imgur Album"
             android:screenOrientation="portrait"
             android:theme="@style/ImgurAlbumTheme" />

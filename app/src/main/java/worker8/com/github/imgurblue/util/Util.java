@@ -1,4 +1,4 @@
-package worker8.com.github.imgurdiscovery.util;
+package worker8.com.github.imgurblue.util;
 
 import android.app.Activity;
 import android.content.Context;

@@ -1,4 +1,4 @@
-package worker8.com.github.imgurdiscovery.activities.main_activity;
+package worker8.com.github.imgurblue.activities.main_activity;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -28,10 +28,10 @@ import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
-import worker8.com.github.imgurdiscovery.R;
-import worker8.com.github.imgurdiscovery.imgur_wrapper.ImgurConstant;
-import worker8.com.github.imgurdiscovery.util.RxUtils;
-import worker8.com.github.imgurdiscovery.util.Util;
+import worker8.com.github.imgurblue.R;
+import worker8.com.github.imgurblue.imgur_wrapper.ImgurConstant;
+import worker8.com.github.imgurblue.util.RxUtils;
+import worker8.com.github.imgurblue.util.Util;
 import worker8.com.github.jimgur.imgur.paging_api.ImgurPaginationResponse;
 import worker8.com.github.jimgur.imgur.paging_api.ImgurPaginator;
 

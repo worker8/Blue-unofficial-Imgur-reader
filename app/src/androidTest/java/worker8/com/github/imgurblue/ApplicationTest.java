@@ -1,4 +1,4 @@
-package worker8.com.github.imgurdiscovery;
+package worker8.com.github.imgurblue;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

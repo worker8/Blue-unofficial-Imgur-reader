@@ -1,4 +1,4 @@
-package worker8.com.github.imgurdiscovery.util;
+package worker8.com.github.imgurblue.util;
 
 /**
  * Any constant that doesn't belong elsewhere goes to this file

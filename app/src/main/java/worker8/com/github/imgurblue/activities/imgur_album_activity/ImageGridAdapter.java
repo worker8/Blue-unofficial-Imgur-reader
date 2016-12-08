@@ -1,4 +1,4 @@
-package worker8.com.github.imgurdiscovery.activities.imgur_album_activity;
+package worker8.com.github.imgurblue.activities.imgur_album_activity;
 
 import android.content.Context;
 import android.view.View;
@@ -10,9 +10,9 @@ import android.widget.ImageView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-import worker8.com.github.imgurdiscovery.R;
-import worker8.com.github.imgurdiscovery.custom_view.SquareImageView;
-import worker8.com.github.imgurdiscovery.imgur_wrapper.ImgurUtil;
+import worker8.com.github.imgurblue.R;
+import worker8.com.github.imgurblue.custom_view.SquareImageView;
+import worker8.com.github.imgurblue.imgur_wrapper.ImgurUtil;
 import worker8.com.github.jimgur.imgur.album_api.AlbumResponse;
 import worker8.com.github.jimgur.imgur.gallery_api.GalleryResponse;
 

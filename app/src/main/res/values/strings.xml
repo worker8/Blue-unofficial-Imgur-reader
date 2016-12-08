@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Imgur Discovery</string>
+    <string name="app_name">Imgur Blue</string>
     <string name="action_refresh">Refresh</string>
     <string name="invalid_gif_link">Invalid gif link</string>
     <string name="share_via">Share via</string>
