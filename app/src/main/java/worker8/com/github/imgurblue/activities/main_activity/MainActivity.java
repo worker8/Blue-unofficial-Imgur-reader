@@ -19,9 +19,12 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
+import io.fabric.sdk.android.Fabric;
 import main.java.com.github.worker8.HtmlFormatter;
 import rx.Observable;
 import rx.Observer;
@@ -81,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         activity = this;
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);

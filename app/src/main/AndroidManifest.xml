@@ -12,6 +12,10 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="e7537482a77e19792c11a4aaaa42b361476b0d4f"
+            />
         <activity
             android:name="worker8.com.github.imgurblue.activities.main_activity.MainActivity"
             android:label="@string/app_name"
@@ -37,6 +41,7 @@
             android:label="Imgur Album"
             android:screenOrientation="portrait"
             android:theme="@style/ImgurAlbumTheme" />
+
     </application>
 
 </manifest>

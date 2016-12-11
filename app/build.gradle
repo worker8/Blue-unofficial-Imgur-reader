@@ -13,6 +13,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'android-apt'
+apply plugin: 'io.fabric'
 
 android {
     compileSdkVersion 25
@@ -84,7 +85,11 @@ dependencies {
     apt 'com.rejasupotaro:kvs-schema-compiler:5.0.1'
     compile 'com.rejasupotaro:kvs-schema:5.0.1'
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
+        transitive = true;
+    }
 }
 repositories {
     mavenCentral()
+    maven { url 'https://maven.fabric.io/public' }
 }
