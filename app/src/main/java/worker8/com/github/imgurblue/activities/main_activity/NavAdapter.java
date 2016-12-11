@@ -19,7 +19,7 @@ public class NavAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return ImgurConstant.sectionList.size();
+        return ImgurConstant.INSTANCE.getSectionList().size();
     }
 
     @Override
@@ -40,7 +40,7 @@ public class NavAdapter extends BaseAdapter {
         TextView navRowTV = ButterKnife.findById(convertView, R.id.nav_row_tv);
         clearView(navRowTV);
 
-        String section = ImgurConstant.sectionList.get(position);
+        String section = ImgurConstant.INSTANCE.getSectionList().get(position);
         navRowTV.setText(section);
         convertView.setOnClickListener(v -> EventBus.getDefault().post(new MainActivity.NewSectionSelectedEvent(section)));
         return convertView;

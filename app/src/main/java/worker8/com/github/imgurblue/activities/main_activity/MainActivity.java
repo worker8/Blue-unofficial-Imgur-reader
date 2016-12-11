@@ -102,8 +102,8 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int randomSectionPosition = Util.randInt(0, ImgurConstant.sectionList.size() - 1);
-                String section = ImgurConstant.sectionList.get(randomSectionPosition);
+                int randomSectionPosition = Util.randInt(0, ImgurConstant.INSTANCE.getSectionList().size() - 1);
+                String section = ImgurConstant.INSTANCE.getSectionList().get(randomSectionPosition);
                 EventBus.getDefault().post(new MainActivity.NewSectionSelectedEvent(section));
             }
         });
