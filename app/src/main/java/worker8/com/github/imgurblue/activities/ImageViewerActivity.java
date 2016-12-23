@@ -19,7 +19,6 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import uk.co.senab.photoview.PhotoView;
-import uk.co.senab.photoview.PhotoViewAttacher;
 import worker8.com.github.imgurblue.R;
 import worker8.com.github.imgurblue.util.ActionUtil;
 import worker8.com.github.imgurblue.util.Util;
@@ -57,12 +56,7 @@ public class ImageViewerActivity extends AppCompatActivity {
             }
         });
 
-        imageView.setOnViewTapListener(new PhotoViewAttacher.OnViewTapListener() {
-            @Override
-            public void onViewTap(View view, float x, float y) {
-                activity.finish();
-            }
-        });
+        imageView.setOnViewTapListener((view, x, y) -> activity.finish());
 
     }
 

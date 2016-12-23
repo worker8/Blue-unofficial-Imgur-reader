@@ -40,52 +40,61 @@ import worker8.com.github.jimgur.imgur.paging_api.ImgurPaginationResponse;
 import worker8.com.github.jimgur.imgur.paging_api.ImgurPaginator;
 
 public class MainActivity extends AppCompatActivity {
-    public final static String TAG = "MainActivity";
-    MainActivity activity;
 
+    private final static String TAG = "MainActivity";
+    private Snackbar connectionSnackbar;
     /* data models */
     private CompositeSubscription _subscriptions = new CompositeSubscription();
     private ImgurPaginator imgurPaginator;
-    ImageAdapter imageAdapter;
+    private ImageAdapter imageAdapter;
+
     /**
      * currently selected section, changeable from nav drawer
      */
-    String currentSection;
+    private String currentSection;
 
     /* UI variables */
     @Bind(R.id.main_cl)
     CoordinatorLayout coordinatorLayout;
+
     @Bind(R.id.main_lv_image_list)
     ListView imageListView;
+
     @Bind(R.id.main_pb_loading)
     ProgressBar progressBarMiddle; // this is used when the page is empty
+
     @Bind(R.id.main_pb_bottom_load_more)
     ProgressBar progressBarBottom; // this is used when the page is not empty, and when it is loading more
+
     @Bind(R.id.main_fab)
     FloatingActionButton fab;
+
     // nav area
     @Bind(R.id.main_drawer_layout)
     DrawerLayout drawerLayout;
+
     @Bind(R.id.nav_lv)
     ListView navListView;
+
     // toolbar
     @Bind(R.id.toolbar)
     Toolbar toolbar;
+
     @Bind(R.id.main_toolbar_tv_title)
     TextView toolbarTitleTV;
+
     @Bind(R.id.main_toolbar_tv_section)
     TextView toolbarSectionTV;
 
     /**
      * This variable is used to serve as a simple lock to prevent making multiple calls to load more content when we hit the bottom of the list
      */
-    boolean loadMoreLock = false;
+    private boolean loadMoreLock = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics());
-        activity = this;
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
@@ -93,15 +102,14 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         /* setup burger menu */
-        ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(
-                this, drawerLayout, toolbar, R.string.drawer_open_string, R.string.drawer_close_string);
+        ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open_string, R.string.drawer_close_string);
         drawerLayout.setDrawerListener(mDrawerToggle);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         mDrawerToggle.syncState();
 
-        navListView.setAdapter(new NavAdapter(activity));
+        navListView.setAdapter(new NavAdapter(this));
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
                 EventBus.getDefault().post(new MainActivity.NewSectionSelectedEvent(section));
             }
         });
+
         currentSection = GeneralPref.get(this).getLastVisitedSub();
         toolbarSectionTV.setText(currentSection);
         loadMore(currentSection);
@@ -125,11 +134,10 @@ public class MainActivity extends AppCompatActivity {
         imageListView.setAdapter(null);
     }
 
-    Snackbar connectionSnackbar;
-
     /**
      * This is the most interesting method in this activity.
      * It loads more content
+     *
      * @param section imgur has different 'section', example input "hot", "top", "r/aww", "r/pics"
      */
     private void loadMore(String section) {
@@ -202,7 +210,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private void onNewDataLoaded(ImgurPaginationResponse imgurPaginationResponse) {
         if (imageAdapter == null) {
-            imageAdapter = new ImageAdapter(activity, imgurPaginationResponse.getImgurDataList());
+            imageAdapter = new ImageAdapter(this, imgurPaginationResponse.getImgurDataList());
             imageListView.setAdapter(imageAdapter);
             imageListView.setOnScrollListener(new AbsListView.OnScrollListener() {
                 @Override
